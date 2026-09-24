@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="styles.css">
+<script src="ds-bundle.js"></script>
+<style>
+:root{
+  --color-bg:#ffffff;
+  --color-surface:#f1f2f3;
+  --color-text:#1b1c1e;
+  --color-accent:#8d2a2e;
+  --color-accent-2:#8d2a2e;
+  --color-divider:color-mix(in srgb, #1b1c1e 15%, transparent);
+  --color-accent-100:#f8eeee;
+  --color-accent-300:#ddb4b6;
+  --color-accent-600:#7c2529;
+  --color-accent-700:#6a2023;
+  --color-accent-800:#4d171a;
+  --color-accent-900:#331013;
+  --silver:#c9ccd0;
+  --silver-2:#e4e6e8;
+  --metal:linear-gradient(180deg,#7b2326 0%,#95292e 42%,#7a2225 100%);
+  --metal-silver:linear-gradient(180deg,#ffffff 0%,#eceef0 46%,#dcdfe2 100%);
+}
+body{-webkit-font-smoothing:antialiased}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent)}
+.btn-primary{background:var(--metal);border-color:#a8565c;color:#fff}
+.btn-primary:hover{background:linear-gradient(180deg,#8d2a2e 0%,#a8343a 42%,#8d2a2e 100%)}
+select.input{appearance:none}
+[data-mob]{display:none}
+@media (max-width:820px){
+  [data-desk]{display:none !important}
+  [data-mob]{display:flex !important}
+  [data-stack]{grid-template-columns:minmax(0,1fr) !important;gap:30px !important}
+  [data-hero]{padding:60px 20px 54px !important;min-height:0 !important}
+  [data-hero-txt]{min-height:300px !important}
+  [data-veil]{background:linear-gradient(180deg,rgba(13,14,16,0.78) 0%,rgba(13,14,16,0.66) 100%) !important}
+  [data-crow]{grid-template-columns:30px minmax(0,1fr) !important;gap:14px !important;padding:18px 4px !important}
+  [data-crow] > span{grid-column:2;white-space:normal !important;font-size:14px !important}
+  [data-foto]{max-width:300px;width:100%;margin:0 auto !important}
+}
+</style>
+</helmet>
+
+<div style="font-family:var(--font-body);color:var(--color-text);background:var(--color-bg);minHeight:100vh">
+
+  <header style="position:sticky;top:0;zIndex:50;background:rgba(255,255,255,0.94);backdropFilter:saturate(140%) blur(8px);borderBottom:1px solid var(--color-divider)">
+    <div style="maxWidth:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:22px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;margin-right:auto;textDecoration:none;color:inherit">
+        <div style="width:30px;height:30px;background:var(--metal);display:grid;place-items:center;color:#fff;fontFamily:var(--font-heading);fontSize:15px">7%</div>
+        <div style="lineHeight:1.05">
+          <div style="fontFamily:var(--font-heading);fontSize:17px">{{ nombre }}</div>
+          <div style="fontSize:10px;letterSpacing:0.14em;textTransform:uppercase;color:var(--color-neutral-600)">Asesor en salud previsional</div>
+        </div>
+      </a>
+      <nav style="display:flex;align-items:center;gap:20px;fontSize:14px">
+        <a data-desk="1" href="index.html" style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-text);textDecoration:none;whiteSpace:nowrap" style-hover="color:var(--color-accent)">Inicio</a>
+        <a data-desk="1" href="index.html#caso" style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-text);textDecoration:none;whiteSpace:nowrap" style-hover="color:var(--color-accent)">Cuéntanos tu caso</a>
+        <a href="{{ waLink }}" target="_blank" rel="noopener" class="btn" style="gap:8px;whiteSpace:nowrap;background:#25D366;color:#ffffff;borderColor:#25D366" style-hover="background:#1EBE5A">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+          WhatsApp
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <section style="background:var(--metal-silver);borderBottom:1px solid var(--silver)">
+    <div style="maxWidth:940px;margin:0 auto;padding:58px 20px 50px;textAlign:center">
+      <div style="fontSize:11px;letterSpacing:0.28em;textTransform:uppercase;color:var(--color-accent-700)">Comparador</div>
+      <h1 style="fontSize:clamp(38px,5.6vw,62px);lineHeight:0.98;margin:14px 0 14px;textTransform:uppercase;letterSpacing:0.01em">Lo que pagas hoy vs. lo que podrías pagar</h1>
+      <p style="fontSize:17.5px;lineHeight:1.55;margin:0 auto;maxWidth:50ch;color:var(--color-neutral-800)">Pon tu renta y lo que descuentan hoy por tu plan. Te muestro la diferencia mensual y anual frente a un plan del tarifario vigente.</p>
+    </div>
+  </section>
+
+  <section style="maxWidth:1000px;margin:0 auto;padding:48px 20px 0">
+    <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px;alignItems:stretch">
+      <div style="padding:26px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+        <div style="fontSize:11px;letterSpacing:0.2em;textTransform:uppercase;color:var(--color-neutral-700)">Tu situación hoy</div>
+        <h3 style="margin:8px 0 20px;fontSize:24px">Lo que ya pagas</h3>
+        <div class="field" style="marginBottom:18px">
+          <label style="fontSize:12px">Renta imponible mensual</label>
+          <input type="number" class="input" value="{{ renta }}" onChange="{{ setRenta }}" min="0" step="50000" style="fontSize:20px;minHeight:50px;fontFamily:var(--font-heading);background:#fff">
+        </div>
+        <div class="field">
+          <label style="fontSize:12px">Lo que pagas hoy por tu plan (total mensual)</label>
+          <input type="number" class="input" value="{{ pagoActual }}" onChange="{{ setPagoActual }}" min="0" step="10000" style="fontSize:20px;minHeight:50px;fontFamily:var(--font-heading);background:#fff">
+        </div>
+        <div style="marginTop:22px;paddingTop:18px;borderTop:1px solid var(--color-divider)">
+          <div style="fontSize:11px;letterSpacing:0.18em;textTransform:uppercase;color:var(--color-neutral-700)">Tu 7% legal</div>
+          <div style="fontFamily:var(--font-heading);fontSize:34px;lineHeight:1.1">{{ aporteFmt }}</div>
+          <div style="fontSize:13px;color:var(--color-neutral-700)">{{ sobreAporteTexto }}</div>
+        </div>
+      </div>
+
+      <div style="boxShadow:0 18px 40px rgba(77,23,26,0.28);padding:26px;background:var(--metal);color:#fff;border:1px solid var(--silver)">
+        <div style="fontSize:11px;letterSpacing:0.2em;textTransform:uppercase;color:var(--silver-2)">Mi propuesta</div>
+        <h3 style="margin:8px 0 20px;fontSize:24px">Plan del tarifario vigente</h3>
+        <div class="field" style="marginBottom:18px">
+          <label style="fontSize:12px;color:#ffffff">Familia de planes</label>
+          <select class="input" value="{{ planId }}" onChange="{{ setPlan }}" style="fontSize:16px;minHeight:50px;fontFamily:var(--font-heading);background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)">
+            <sc-for list="{{ opciones }}" as="o" hint-placeholder-count="6">
+              <option value="{{ o.id }}" style="color:#1b1c1e">{{ o.etiqueta }}</option>
+            </sc-for>
+          </select>
+        </div>
+        <div style="display:grid;gridTemplateColumns:1fr 1fr;gap:14px">
+          <div class="field">
+            <label style="fontSize:12px;color:#ffffff">Cargas adultas</label>
+            <input type="number" class="input" value="{{ adultos }}" onChange="{{ setAdultos }}" min="0" max="6" step="1" style="fontSize:20px;minHeight:50px;fontFamily:var(--font-heading);background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)">
+          </div>
+          <div class="field">
+            <label style="fontSize:12px;color:#ffffff">Hijos &lt; 18</label>
+            <input type="number" class="input" value="{{ hijos }}" onChange="{{ setHijos }}" min="0" max="8" step="1" style="fontSize:20px;minHeight:50px;fontFamily:var(--font-heading);background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)">
+          </div>
+        </div>
+        <div style="marginTop:22px;paddingTop:18px;borderTop:1px solid rgba(255,255,255,0.3)">
+          <div style="fontSize:11px;letterSpacing:0.18em;textTransform:uppercase;color:var(--silver-2)">Valor estimado del plan</div>
+          <div style="fontFamily:var(--font-heading);fontSize:34px;lineHeight:1.1">{{ precioFmt }}</div>
+          <div style="fontSize:13px;color:#f0f1f2">{{ precioUF }} · V.B. {{ vbFmt }} × factor {{ factorFmt }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="maxWidth:1000px;margin:0 auto;padding:44px 20px 0">
+    <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+      <div style="background:#fff;padding:24px 20px">
+        <div style="fontSize:11px;letterSpacing:0.18em;textTransform:uppercase;color:var(--color-neutral-700)">Diferencia mensual</div>
+        <div style="fontFamily:var(--font-heading);fontSize:40px;lineHeight:1.05;color:{{ colorDif }}">{{ difMesFmt }}</div>
+        <div style="fontSize:13px;color:var(--color-neutral-700)">{{ etiquetaDif }}</div>
+      </div>
+      <div style="background:#fff;padding:24px 20px">
+        <div style="fontSize:11px;letterSpacing:0.18em;textTransform:uppercase;color:var(--color-neutral-700)">En 12 meses</div>
+        <div style="fontFamily:var(--font-heading);fontSize:40px;lineHeight:1.05;color:{{ colorDif }}">{{ difAnualFmt }}</div>
+        <div style="fontSize:13px;color:var(--color-neutral-700)">mismo escenario, un año</div>
+      </div>
+      <div style="background:#fff;padding:24px 20px">
+        <div style="fontSize:11px;letterSpacing:0.18em;textTransform:uppercase;color:var(--color-neutral-700)">Plan comparado</div>
+        <div style="fontFamily:var(--font-heading);fontSize:22px;lineHeight:1.15;marginTop:6px">{{ planNombre }}</div>
+        <div style="fontSize:13px;color:var(--color-neutral-700);marginTop:6px">{{ planTipo }}</div>
+      </div>
+    </div>
+    <p style="fontSize:12.5px;color:var(--color-neutral-600);marginTop:14px">Estimación con UF a {{ ufFmt }} y valores base del Tarifario Santiago 01/09/2026. El factor definitivo depende de la edad y sexo de cada beneficiario: eso lo aplico en la cotización formal.</p>
+  </section>
+
+  <section style="maxWidth:1000px;margin:0 auto;padding:30px 20px 64px">
+    <div style="padding:26px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+      <p style="fontSize:15.5px;lineHeight:1.6;margin:0 0 18px;maxWidth:70ch">{{ planRed }}</p>
+      <a href="{{ waLinkCalc }}" target="_blank" rel="noopener" class="btn" style="padding:13px 22px;fontSize:15px;gap:10px;whiteSpace:nowrap;background:#25D366;color:#ffffff;borderColor:#25D366" style-hover="background:#1EBE5A">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+        Enviar esta comparación
+      </a>
+    </div>
+  </section>
+
+  <footer style="background:var(--color-neutral-900);color:#fff">
+    <div style="maxWidth:1180px;margin:0 auto;padding:36px 20px 28px;display:flex;flexWrap:wrap;gap:20px;justifyContent:space-between;align-items:center">
+      <div>
+        <div style="fontFamily:var(--font-heading);fontSize:20px">{{ nombre }}</div>
+        <div style="fontSize:12px;letterSpacing:0.14em;textTransform:uppercase;color:var(--silver)">Ejecutivo de ventas · Banmédica</div>
+      </div>
+      <a href="{{ waLink }}" target="_blank" rel="noopener" style="color:#fff;textDecoration:none;fontSize:14.5px" style-hover="color:var(--silver)">WhatsApp {{ telefonoFmt }}</a>
+    </div>
+  </footer>
+
+  <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp" style="position:fixed;right:22px;bottom:22px;zIndex:60;width:60px;height:60px;borderRadius:50%;display:grid;place-items:center;background:#25D366;color:#fff;border:0;boxShadow:0 8px 22px rgba(0,0,0,0.3)" style-hover="background:#1EBE5A">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;nombre&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nicolás Olivares Moraga&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;56994754618&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;valorUF&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:39500,&quot;min&quot;:30000,&quot;max&quot;:60000,&quot;step&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cálculo&quot;}}">
+class Component extends DCLogic {
+  state = { renta: 1500000, pagoActual: 130000, adultos: 0, hijos: 0, planId: "bsg" };
+
+  planes = [
+    { id: "bscc", nombre: "Salud Conecta Clásico", vb: 0.94, tipo: "Plan cerrado", red: "Clínica Dávila y Clínica Vespucio más los Centros Médicos Red Dávila, con cobertura hospitalaria preferente sin tope en esas clínicas." },
+    { id: "bcg", nombre: "Salud Clásico Gold", vb: 1.26, tipo: "Plan preferente", red: "Clínica Dávila, Vespucio, RedSalud Santiago y Providencia, Indisa, Santa María, MEDS y Hospital Clínico UC." },
+    { id: "bsg", nombre: "Salud Superior Gold", vb: 1.46, tipo: "Plan preferente", red: "Misma red Gold con bonificaciones ambulatorias y hospitalarias más altas: es el punto de equilibrio más pedido." },
+    { id: "bspa", nombre: "Salud Superior Platinum A", vb: 1.52, tipo: "Con tope ambulatorio", red: "Agrega Las Condes, Los Andes y San Carlos de Apoquindo, con tope en exámenes e imagenología ambulatoria." },
+    { id: "bsp", nombre: "Salud Superior Platinum", vb: 2.26, tipo: "Plan preferente", red: "Red Platinum completa, incluida Clínica UC, Las Condes, Los Andes y San Carlos de Apoquindo." },
+    { id: "bpt", nombre: "Salud Preferente Titanium", vb: 2.61, tipo: "Plan premium", red: "Dávila, Vespucio, Santa María, MEDS, Los Andes, San Carlos y Alemana; se agregan RedSalud, Indisa, Hospital UC y Las Condes." },
+    { id: "bpb", nombre: "Salud Preferente Black", vb: 5.01, tipo: "Plan premium", red: "La red más amplia: Dávila, Vespucio, Indisa, Santa María, Hospital UC, MEDS, Los Andes, San Carlos, Alemana y Las Condes." }
+  ];
+
+  clp(n) { return "$" + Math.round(n).toLocaleString("es-CL"); }
+
+  renderVals() {
+    const uf = Number(this.props.valorUF) || 39500;
+    const renta = Math.max(0, Number(this.state.renta) || 0);
+    const pagoActual = Math.max(0, Number(this.state.pagoActual) || 0);
+    const adultos = Math.max(0, Number(this.state.adultos) || 0);
+    const hijos = Math.max(0, Number(this.state.hijos) || 0);
+    const plan = this.planes.find((p) => p.id === this.state.planId) || this.planes[2];
+
+    const aporte = Math.min(renta, 87.8 * uf) * 0.07;
+    const factor = 1 + adultos * 0.9 + hijos * 0.6;
+    const precioUF = plan.vb * factor;
+    const precio = precioUF * uf;
+    const dif = pagoActual - precio;
+    const ahorra = dif > 0;
+    const sobre = pagoActual - aporte;
+
+    const tel = String(this.props.whatsapp || "56994754618").replace(/[^0-9]/g, "");
+    const msg = encodeURIComponent("Hola, vengo de tu página y quiero cotizar un plan de isapre.");
+    const msgCalc = encodeURIComponent(
+      "Hola, comparé mi plan. Hoy pago " + this.clp(pagoActual) +
+      ", mi renta imponible es " + this.clp(renta) +
+      " (7%: " + this.clp(aporte) + "). Me interesa " + plan.nombre +
+      " con " + adultos + " carga(s) adulta(s) y " + hijos + " hijo(s). Estimación: " + this.clp(precio) + "."
+    );
+
+    return {
+      nombre: this.props.nombre ?? "Nicolás Olivares Moraga",
+      telefonoFmt: "+56 9 9475 4618",
+      waLink: "https://wa.me/" + tel + "?text=" + msg,
+      waLinkCalc: "https://wa.me/" + tel + "?text=" + msgCalc,
+      ufFmt: this.clp(uf),
+      renta: this.state.renta,
+      pagoActual: this.state.pagoActual,
+      adultos: this.state.adultos,
+      hijos: this.state.hijos,
+      planId: this.state.planId,
+      opciones: this.planes.map((p) => ({ id: p.id, etiqueta: p.nombre + " · " + p.vb.toFixed(2).replace(".", ",") + " UF" })),
+      planNombre: plan.nombre,
+      planTipo: plan.tipo,
+      planRed: plan.red,
+      vbFmt: plan.vb.toFixed(2).replace(".", ",") + " UF",
+      factorFmt: factor.toFixed(2).replace(".", ","),
+      aporteFmt: this.clp(aporte),
+      sobreAporteTexto: sobre > 0
+        ? "Hoy pagas " + this.clp(sobre) + " por sobre tu 7%"
+        : "Hoy tu plan cabe dentro de tu 7%",
+      precioFmt: this.clp(precio),
+      precioUF: precioUF.toFixed(2).replace(".", ",") + " UF",
+      difMesFmt: (ahorra ? "− " : "+ ") + this.clp(Math.abs(dif)),
+      difAnualFmt: (ahorra ? "− " : "+ ") + this.clp(Math.abs(dif) * 12),
+      etiquetaDif: ahorra ? "menos de lo que pagas hoy" : "más de lo que pagas hoy",
+      colorDif: ahorra ? "#1a7a45" : "var(--color-accent-700)",
+      setRenta: (e) => this.setState({ renta: e.target.value }),
+      setPagoActual: (e) => this.setState({ pagoActual: e.target.value }),
+      setAdultos: (e) => this.setState({ adultos: e.target.value }),
+      setHijos: (e) => this.setState({ hijos: e.target.value }),
+      setPlan: (e) => this.setState({ planId: e.target.value })
+    };
+  }
+}
+</script>
+</body>
+</html>

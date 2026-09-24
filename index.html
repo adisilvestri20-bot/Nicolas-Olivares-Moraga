@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="styles.css">
+<script src="ds-bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+:root{
+  --color-bg:#ffffff;
+  --color-surface:#f1f2f3;
+  --color-text:#1b1c1e;
+  --color-accent:#8d2a2e;
+  --color-accent-2:#8d2a2e;
+  --color-divider:color-mix(in srgb, #1b1c1e 15%, transparent);
+  --color-accent-100:#f8eeee;
+  --color-accent-200:#eed8d9;
+  --color-accent-300:#ddb4b6;
+  --color-accent-400:#c5878b;
+  --color-accent-500:#a85a5f;
+  --color-accent-600:#7c2529;
+  --color-accent-700:#6a2023;
+  --color-accent-800:#4d171a;
+  --color-accent-900:#331013;
+  --color-accent-2-100:#f8eeee;
+  --color-accent-2-800:#4d171a;
+  --silver:#c9ccd0;
+  --silver-2:#e4e6e8;
+  --metal:linear-gradient(180deg,#7b2326 0%,#95292e 42%,#7a2225 100%);
+  --metal-silver:linear-gradient(180deg,#eceef0 0%,#d9dcdf 50%,#c4c8cc 100%);
+}
+body{-webkit-font-smoothing:antialiased}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+html{scroll-behavior:smooth}
+@keyframes reveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+[data-reveal]{opacity:1}
+[data-reveal].reveal-armed{opacity:0}
+[data-reveal].is-in{opacity:1;animation:reveal 760ms cubic-bezier(.22,.61,.36,1) forwards}
+@media (prefers-reduced-motion:reduce){[data-reveal].reveal-armed{opacity:1}[data-reveal].is-in{animation:none}}
+summary{list-style:none}
+summary::-webkit-details-marker{display:none}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent)}
+.btn-primary{background:var(--metal);border-color:#a8565c;color:#fff}
+.btn-primary:hover{background:linear-gradient(180deg,#8d2a2e 0%,#a8343a 42%,#8d2a2e 100%)}
+.btn-primary:active{background:linear-gradient(180deg,#6a2023 0%,#7c2529 42%,#6a2023 100%)}
+#cotiza .radio input:checked + .dot{border-color:#fff;background:#fff;box-shadow:inset 0 0 0 4px #8d2a2e}
+#cotiza .radio:hover .dot{border-color:#fff}
+[data-mob]{display:none}
+@media (max-width:820px){
+  [data-desk]{display:none !important}
+  [data-mob]{display:flex !important}
+  [data-stack]{grid-template-columns:minmax(0,1fr) !important;gap:30px !important}
+  [data-hero]{padding:60px 20px 54px !important;min-height:0 !important}
+  [data-hero-txt]{min-height:300px !important}
+  [data-veil]{background:linear-gradient(180deg,rgba(13,14,16,0.78) 0%,rgba(13,14,16,0.66) 100%) !important}
+  [data-crow]{grid-template-columns:30px minmax(0,1fr) !important;gap:14px !important;padding:18px 4px !important}
+  [data-crow] > span{grid-column:2;white-space:normal !important;font-size:14px !important}
+  [data-foto]{max-width:300px;width:100%;margin:0 auto !important}
+}
+</style>
+</helmet>
+
+<div style="font-family:var(--font-body);color:var(--color-text);background:var(--color-bg)">
+
+  <header style="position:sticky;top:0;zIndex:50;background:rgba(255,255,255,0.94);backdropFilter:saturate(140%) blur(8px);borderBottom:1px solid var(--color-divider)">
+    <div style="maxWidth:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:22px">
+      <div style="display:flex;align-items:center;gap:10px;margin-right:auto">
+        <div style="width:30px;height:30px;background:var(--metal);display:grid;place-items:center;color:#fff;fontFamily:var(--font-heading);fontSize:15px;letterSpacing:0.02em">7%</div>
+        <div style="lineHeight:1.05">
+          <div style="fontFamily:var(--font-heading);fontSize:17px;letterSpacing:0.01em">{{ nombre }}</div>
+          <div style="fontSize:10px;letterSpacing:0.14em;textTransform:uppercase;color:var(--color-neutral-600)">Asesor en salud previsional</div>
+        </div>
+      </div>
+
+      <nav data-desk="1" style="display:flex;align-items:center;gap:20px;fontSize:14px">
+        <div style="position:relative" onMouseEnter="{{ abrirMenu }}" onMouseLeave="{{ cerrarMenu }}">
+          <button type="button" onClick="{{ toggleMenu }}" style="display:flex;align-items:center;gap:6px;background:transparent;border:0;padding:6px 0;font:inherit;color:inherit;cursor:pointer;fontFamily:var(--font-heading);fontSize:15px" style-hover="color:var(--color-accent)">Servicios
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"></path></svg>
+          </button>
+          <sc-if value="{{ menuAbierto }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:100%;left:-14px;minWidth:250px;background:#fff;border:1px solid var(--color-divider);boxShadow:var(--shadow-md);padding:6px 0">
+              <a href="#informacion" onClick="{{ cerrarMenu }}" style="display:block;padding:9px 16px;fontSize:14px;color:var(--color-text);textDecoration:none" style-hover="background:var(--color-accent-100);color:var(--color-accent-700)">1. Información importante</a>
+              <a href="#pasos" onClick="{{ cerrarMenu }}" style="display:block;padding:9px 16px;fontSize:14px;color:var(--color-text);textDecoration:none" style-hover="background:var(--color-accent-100);color:var(--color-accent-700)">2. Cómo funciona</a>
+              <a href="#caso" onClick="{{ cerrarMenu }}" style="display:block;padding:9px 16px;fontSize:14px;color:var(--color-text);textDecoration:none" style-hover="background:var(--color-accent-100);color:var(--color-accent-700)">3. Cuéntanos tu caso</a>
+              <a href="calculadora.html" style="display:block;padding:9px 16px;fontSize:14px;color:var(--color-text);textDecoration:none;borderTop:1px solid var(--color-divider)" style-hover="background:var(--color-accent-100);color:var(--color-accent-700)">4. Calculadora de valor</a>
+            </div>
+          </sc-if>
+        </div>
+        <a href="calculadora.html" style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-text);textDecoration:none;whiteSpace:nowrap" style-hover="color:var(--color-accent)">Calculadora</a>
+        <a href="#cotiza" style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-text);textDecoration:none;whiteSpace:nowrap" style-hover="color:var(--color-accent)">Cotiza gratis</a>
+        <a href="#contacto" style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-text);textDecoration:none;whiteSpace:nowrap" style-hover="color:var(--color-accent)">Contacto</a>
+        <a href="{{ waLink }}" target="_blank" rel="noopener" class="btn" style="gap:8px;whiteSpace:nowrap;background:#25D366;color:#ffffff;borderColor:#25D366" style-hover="background:#1EBE5A">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+          WhatsApp
+        </a>
+      </nav>
+      <button type="button" data-mob="1" onClick="{{ toggleMovil }}" aria-label="Abrir menú" style="display:none;alignItems:center;justifyContent:center;width:44px;height:44px;background:transparent;border:1px solid var(--color-divider);color:var(--color-text);cursor:pointer;flex:none">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="{{ iconoMenu }}"></path></svg>
+      </button>
+    </div>
+    <sc-if value="{{ menuMovil }}" hint-placeholder-val="{{ false }}">
+      <div style="borderTop:1px solid var(--color-divider);background:#fff;padding:4px 20px 20px;display:flex;flexDirection:column">
+        <a href="#informacion" onClick="{{ cerrarMovil }}" style="padding:14px 0;borderBottom:1px solid var(--color-divider);fontFamily:var(--font-heading);fontSize:19px;color:var(--color-text);textDecoration:none">Información importante</a>
+        <a href="#pasos" onClick="{{ cerrarMovil }}" style="padding:14px 0;borderBottom:1px solid var(--color-divider);fontFamily:var(--font-heading);fontSize:19px;color:var(--color-text);textDecoration:none">Cómo funciona</a>
+        <a href="#caso" onClick="{{ cerrarMovil }}" style="padding:14px 0;borderBottom:1px solid var(--color-divider);fontFamily:var(--font-heading);fontSize:19px;color:var(--color-text);textDecoration:none">Cuéntanos tu caso</a>
+        <a href="calculadora.html" style="padding:14px 0;borderBottom:1px solid var(--color-divider);fontFamily:var(--font-heading);fontSize:19px;color:var(--color-text);textDecoration:none">Calculadora</a>
+        <a href="#contacto" onClick="{{ cerrarMovil }}" style="padding:14px 0;borderBottom:1px solid var(--color-divider);fontFamily:var(--font-heading);fontSize:19px;color:var(--color-text);textDecoration:none">Contacto</a>
+        <a href="{{ waLink }}" target="_blank" rel="noopener" class="btn" style="marginTop:16px;padding:14px;fontSize:16px;background:#25D366;color:#ffffff;borderColor:#25D366" style-hover="background:#1EBE5A">Escríbeme por WhatsApp</a>
+      </div>
+    </sc-if>
+  </header>
+
+  <section style="position:relative;overflow:hidden;background:linear-gradient(160deg,#16171a 0%,#1f2023 46%,#121315 100%);color:#fff;borderBottom:1px solid var(--silver)">
+    <img src="portada-banmedica.png" alt="Edificio corporativo Banmédica" style="position:absolute;inset:0;width:100%;height:100%;objectFit:cover;objectPosition:center 30%;filter:contrast(1.06) saturate(1.04)">
+    <div data-veil="1" style="position:absolute;inset:0;background:linear-gradient(95deg,rgba(13,14,16,0.9) 0%,rgba(13,14,16,0.72) 34%,rgba(13,14,16,0.28) 62%,rgba(13,14,16,0.08) 100%);backdropFilter:blur(1px);pointerEvents:none"></div>
+    <div style="position:absolute;left:0;top:0;bottom:0;width:62%;background:linear-gradient(90deg,rgba(13,14,16,0.55) 0%,rgba(13,14,16,0) 100%);backdropFilter:blur(6px);WebkitMaskImage:linear-gradient(90deg,#000 0%,#000 46%,transparent 100%);maskImage:linear-gradient(90deg,#000 0%,#000 46%,transparent 100%);pointerEvents:none"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--silver),transparent);pointerEvents:none"></div>
+
+    <div data-hero="1" style="maxWidth:1180px;margin:0 auto;padding:96px 20px 104px;display:grid;gridTemplateColumns:minmax(0,600px);gap:60px;align-items:center;position:relative;minHeight:560px">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;marginBottom:26px">
+          <span style="width:52px;height:1px;background:linear-gradient(90deg,var(--color-accent-400),var(--silver))"></span>
+          <span style="fontSize:11px;letterSpacing:0.28em;textTransform:uppercase;color:var(--silver)">Planes de isapre · Banmédica</span>
+        </div>
+        <div data-hero-txt="1" style="minHeight:230px">
+          <h1 style="fontSize:clamp(38px,6.6vw,78px);lineHeight:0.96;margin:0 0 18px;textTransform:uppercase;letterSpacing:0.005em;transition:opacity 700ms ease;opacity:{{ tituloOpacidad }}">{{ tituloRotativo }}</h1>
+          <p style="fontSize:19px;lineHeight:1.55;maxWidth:48ch;margin:0;color:#d6d8db;transition:opacity 700ms ease;opacity:{{ tituloOpacidad }}">{{ bajadaRotativa }}</p>
+        </div>
+        <div style="display:flex;gap:8px;margin:26px 0 30px">
+          <sc-for list="{{ puntos }}" as="pt" hint-placeholder-count="4">
+            <span style="width:30px;height:2px;background:{{ pt.color }}"></span>
+          </sc-for>
+        </div>
+        <div style="display:flex;flexWrap:wrap;gap:14px">
+          <a href="{{ waLink }}" target="_blank" rel="noopener" class="btn" style="background:#25D366;color:#ffffff;borderColor:#25D366;padding:14px 24px;fontSize:15px;letterSpacing:0.04em;gap:10px;whiteSpace:nowrap;boxShadow:0 10px 26px rgba(0,0,0,0.45)" style-hover="background:#1EBE5A">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+            Contáctanos por WhatsApp
+          </a>
+          <a href="calculadora.html" class="btn btn-primary" style="padding:14px 24px;fontSize:15px;letterSpacing:0.04em;whiteSpace:nowrap;boxShadow:0 10px 26px rgba(0,0,0,0.45)">Calcular mi 7%</a>
+        </div>
+      </div>
+
+    </div>
+    <div style="borderTop:1px solid var(--silver);borderBottom:1px solid var(--silver);overflow:hidden;padding:12px 0;background:var(--metal);position:relative">
+      <div style="display:flex;width:max-content;animation:marquee 30s linear infinite">
+        <div style="display:flex;align-items:center;gap:30px;padding-right:30px">
+          <span style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.32em;textTransform:uppercase;whiteSpace:nowrap;color:#ffffff">Optimiza tu 7%</span>
+          <span style="width:5px;height:5px;background:#ffffff;flex:none"></span>
+          <span style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.32em;textTransform:uppercase;whiteSpace:nowrap;color:#ffffff">Elige mejor salud</span>
+          <span style="width:5px;height:5px;background:#ffffff;flex:none"></span>
+          <span style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.32em;textTransform:uppercase;whiteSpace:nowrap;color:#ffffff">Asesoría sin costo</span>
+          <span style="width:5px;height:5px;background:#ffffff;flex:none"></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:30px;padding-right:30px" aria-hidden="true">
+          <span style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.32em;textTransform:uppercase;whiteSpace:nowrap;color:#ffffff">Optimiza tu 7%</span>
+          <span style="width:5px;height:5px;background:#ffffff;flex:none"></span>
+          <span style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.32em;textTransform:uppercase;whiteSpace:nowrap;color:#ffffff">Elige mejor salud</span>
+          <span style="width:5px;height:5px;background:#ffffff;flex:none"></span>
+          <span style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.32em;textTransform:uppercase;whiteSpace:nowrap;color:#ffffff">Asesoría sin costo</span>
+          <span style="width:5px;height:5px;background:#ffffff;flex:none"></span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section data-reveal="1" style="maxWidth:1180px;margin:0 auto;padding:72px 20px">
+    <div data-stack="1" style="display:grid;gridTemplateColumns:minmax(0,320px) minmax(0,1fr);gap:48px;align-items:start">
+      <figure data-foto="1" style="position:relative;aspect-ratio:4/5;margin:0;overflow:hidden;boxShadow:0 18px 40px rgba(27,28,30,0.18)">
+        <image-slot id="foto-ejecutiva" shape="rect" src="foto-ejecutiva.jpeg" placeholder="Arrastra tu foto"></image-slot>
+      </figure>
+      <div>
+        <h6 style="color:var(--color-accent-700);margin:0 0 10px">Quién te asesora</h6>
+        <h2 style="fontSize:40px;margin:0 0 18px">Asesoría clara, plan a tu medida.</h2>
+        <p style="fontSize:17px;lineHeight:1.62;maxWidth:62ch">Soy {{ nombre }}, ejecutivo de ventas de planes de salud Banmédica. Llevo años explicando lo mismo que casi nadie explica: qué cubre realmente un plan, dónde están los topes, qué pasa con tus excedentes y cuándo conviene —o no conviene— cambiarse.</p>
+        <p style="fontSize:17px;lineHeight:1.62;maxWidth:62ch">Trabajo con tu número real: tu renta imponible, tu carga familiar, tus prestadores habituales y tu presupuesto. Con eso armamos una alternativa concreta y comparable, sin letra chica y sin apuro. Si tu plan actual es mejor, te lo digo.</p>
+        <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(150px,1fr));gap:18px;marginTop:26px;paddingTop:22px;borderTop:1px solid var(--color-divider)">
+          <div>
+            <div style="fontFamily:var(--font-heading);fontSize:24px;color:var(--color-accent-700)">Asesoría</div>
+            <div style="fontSize:13px;color:var(--color-neutral-700)">sin costo para ti</div>
+          </div>
+          <div>
+            <div style="fontFamily:var(--font-heading);fontSize:24px;color:var(--color-accent-700)">Presencial</div>
+            <div style="fontSize:13px;color:var(--color-neutral-700)">o 100% remoto</div>
+          </div>
+          <div>
+            <div style="fontFamily:var(--font-heading);fontSize:24px;color:var(--color-accent-700)">Post venta</div>
+            <div style="fontSize:13px;color:var(--color-neutral-700)">te acompaño después de firmar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div data-reveal="1" style="background:#fff;padding:44px 20px;display:flex;justifyContent:center;borderTop:1px solid var(--color-divider)">
+    <img src="banmedica.png" alt="Banmédica" style="width:min(86%,520px);height:auto">
+  </div>
+
+  <section id="servicios" data-reveal="1" style="position:relative;overflow:hidden;background:linear-gradient(165deg,#5d1a1d 0%,#8d2a2e 44%,#4f1618 100%);color:#fff;borderTop:1px solid var(--silver);borderBottom:1px solid var(--silver)">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0) 58%);pointerEvents:none"></div>
+
+
+    <div style="maxWidth:1180px;margin:0 auto;padding:52px 20px 48px;position:relative">
+      <div style="textAlign:center;maxWidth:60ch;marginLeft:auto;marginRight:auto;display:flex;flexDirection:column;alignItems:center">
+        <h2 style="fontSize:clamp(34px,4.6vw,54px);lineHeight:0.98;margin:0;textTransform:uppercase;letterSpacing:0.005em">Servicios</h2>
+        <div style="fontFamily:var(--font-heading);fontSize:13px;letterSpacing:0.24em;color:var(--silver-2);margin:14px 0 18px">06 ÁREAS</div>
+        <p style="fontSize:16.5px;lineHeight:1.55;margin:0;color:#f4f2f2;maxWidth:50ch">Asesoría completa alrededor de tu plan de salud: revisar lo que tienes, estructurar lo que necesitas y acompañarte mucho después de firmar.</p>
+        <button type="button" onClick="{{ toggleServicios }}" class="btn" style="background:#fff;color:var(--color-accent-700);borderColor:#fff;padding:12px 26px;fontSize:13px;letterSpacing:0.16em;textTransform:uppercase;marginTop:24px;whiteSpace:nowrap" style-hover="background:var(--silver-2)">{{ labelServicios }}</button>
+      </div>
+
+      <sc-if value="{{ serviciosVisibles }}" hint-placeholder-val="{{ true }}">
+        <div style="maxWidth:860px;margin:40px auto 0;borderTop:1px solid rgba(255,255,255,0.35)">
+          <div style="display:grid;gridTemplateColumns:56px minmax(0,1fr);gap:18px;alignItems:start;padding:20px 0;borderBottom:1px solid rgba(255,255,255,0.22)">
+            <span style="fontFamily:var(--font-heading);fontSize:30px;lineHeight:1;color:var(--silver-2)">01</span>
+            <div>
+              <h4 style="margin:0 0 6px;fontSize:21px">Evaluación de plan actual</h4>
+              <p style="fontSize:14.5px;margin:0;color:#f0f1f2;lineHeight:1.5;maxWidth:62ch">Leemos tu plan vigente: coberturas, topes, prestadores en convenio y cuánto estás pagando sobre tu 7%.</p>
+            </div>
+          </div>
+          <div style="display:grid;gridTemplateColumns:56px minmax(0,1fr);gap:18px;alignItems:start;padding:20px 0;borderBottom:1px solid rgba(255,255,255,0.22)">
+            <span style="fontFamily:var(--font-heading);fontSize:30px;lineHeight:1;color:var(--silver-2)">02</span>
+            <div>
+              <h4 style="margin:0 0 6px;fontSize:21px">Planes individuales y familiares</h4>
+              <p style="fontSize:14.5px;margin:0;color:#f0f1f2;lineHeight:1.5;maxWidth:62ch">Estructuramos la cobertura según cargas, edades y uso real: maternidad, pediatría, crónicos o cirugía programada.</p>
+            </div>
+          </div>
+          <div style="display:grid;gridTemplateColumns:56px minmax(0,1fr);gap:18px;alignItems:start;padding:20px 0;borderBottom:1px solid rgba(255,255,255,0.22)">
+            <span style="fontFamily:var(--font-heading);fontSize:30px;lineHeight:1;color:var(--silver-2)">03</span>
+            <div>
+              <h4 style="margin:0 0 6px;fontSize:21px">Seguros complementarios</h4>
+              <p style="fontSize:14.5px;margin:0;color:#f0f1f2;lineHeight:1.5;maxWidth:62ch">Coberturas adicionales para hospitalización, catastrófico, dental y medicamentos cuando el plan base no alcanza.</p>
+            </div>
+          </div>
+          <div style="display:grid;gridTemplateColumns:56px minmax(0,1fr);gap:18px;alignItems:start;padding:20px 0;borderBottom:1px solid rgba(255,255,255,0.22)">
+            <span style="fontFamily:var(--font-heading);fontSize:30px;lineHeight:1;color:var(--silver-2)">04</span>
+            <div>
+              <h4 style="margin:0 0 6px;fontSize:21px">Excedentes y trámites</h4>
+              <p style="fontSize:14.5px;margin:0;color:#f0f1f2;lineHeight:1.5;maxWidth:62ch">Te explico tus excedentes, licencias médicas, reembolsos y cambios de plan sin que pierdas beneficios.</p>
+            </div>
+          </div>
+          <div style="display:grid;gridTemplateColumns:56px minmax(0,1fr);gap:18px;alignItems:start;padding:20px 0;borderBottom:1px solid rgba(255,255,255,0.22)">
+            <span style="fontFamily:var(--font-heading);fontSize:30px;lineHeight:1;color:var(--silver-2)">05</span>
+            <div>
+              <h4 style="margin:0 0 6px;fontSize:21px">Empresas y equipos</h4>
+              <p style="fontSize:14.5px;margin:0;color:#f0f1f2;lineHeight:1.5;maxWidth:62ch">Convenios colectivos y charlas internas para que tu equipo entienda y aproveche su cobertura.</p>
+            </div>
+          </div>
+          <div style="display:grid;gridTemplateColumns:56px minmax(0,1fr);gap:18px;alignItems:start;padding:20px 0;borderBottom:1px solid rgba(255,255,255,0.22)">
+            <span style="fontFamily:var(--font-heading);fontSize:30px;lineHeight:1;color:var(--silver-2)">06</span>
+            <div>
+              <h4 style="margin:0 0 6px;fontSize:21px">Acompañamiento post venta</h4>
+              <p style="fontSize:14.5px;margin:0;color:#f0f1f2;lineHeight:1.5;maxWidth:62ch">Un canal directo conmigo para dudas, urgencias administrativas y revisión anual de tu plan.</p>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="pasos" data-reveal="1" style="maxWidth:1180px;margin:0 auto;padding:72px 20px">
+    <h6 style="color:var(--color-accent-700);margin:0 0 8px;textAlign:center">Cómo funciona</h6>
+    <h2 style="fontSize:clamp(40px,6vw,68px);lineHeight:1.02;margin:0 auto 34px;maxWidth:30ch;textAlign:center;textTransform:uppercase;letterSpacing:0.01em">3 pasos, 1 solución</h2>
+    <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+      <div style="background:#fff;padding:30px 26px">
+        <div style="fontFamily:var(--font-heading);fontSize:56px;lineHeight:1;color:var(--color-accent);marginBottom:12px">01</div>
+        <h4 style="margin:0 0 8px">Cuéntanos tu situación</h4>
+        <p style="fontSize:14.5px;margin:0;color:var(--color-neutral-800)">Me escribes por WhatsApp o dejas el formulario. Necesito tu renta imponible, tus cargas y qué clínicas usas.</p>
+      </div>
+      <div style="background:#fff;padding:30px 26px">
+        <div style="fontFamily:var(--font-heading);fontSize:56px;lineHeight:1;color:var(--color-accent);marginBottom:12px">02</div>
+        <h4 style="margin:0 0 8px">Observamos y comparamos</h4>
+        <p style="fontSize:14.5px;margin:0;color:var(--color-neutral-800)">Reviso tu plan actual y te muestro dos o tres alternativas reales, con valores en UF y en pesos, y la diferencia sobre tu 7%.</p>
+      </div>
+      <div style="background:#fff;padding:30px 26px">
+        <div style="fontFamily:var(--font-heading);fontSize:56px;lineHeight:1;color:var(--color-accent);marginBottom:12px">03</div>
+        <h4 style="margin:0 0 8px">Firmamos y te acompaño</h4>
+        <p style="fontSize:14.5px;margin:0;color:var(--color-neutral-800)">Si decides avanzar, hago todo el trámite y quedo disponible para la post venta. Si no, quedas igual de informado.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculadora" data-reveal="1" style="background:linear-gradient(180deg,#ffffff 0%,#eceef0 46%,#dcdfe2 100%);color:var(--color-text);borderTop:1px solid var(--silver);borderBottom:1px solid var(--silver)">
+    <div style="maxWidth:1180px;margin:0 auto;padding:64px 20px;display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:36px;align-items:center">
+      <div>
+        <h6 style="color:var(--color-accent-700);margin:0 0 8px">Calculadora de valor</h6>
+        <h2 style="fontSize:clamp(34px,4.6vw,52px);lineHeight:1.04;margin:0 0 14px;maxWidth:24ch;textTransform:uppercase;letterSpacing:0.01em">¿Cuánto vale tu 7% hoy?</h2>
+        <p style="fontSize:17px;lineHeight:1.55;maxWidth:52ch;color:var(--color-neutral-800);margin:0 0 24px">Calcula tu aporte legal, mira qué cobertura alcanzas con él y compáralo con lo que tienes hoy. Toma menos de un minuto.</p>
+        <a href="calculadora.html" class="btn btn-primary" style="padding:13px 22px;fontSize:15px;whiteSpace:nowrap;gap:9px">Abrir la calculadora
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </a>
+      </div>
+      <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:12px">
+        <div style="padding:20px 18px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+          <div style="fontFamily:var(--font-heading);fontSize:32px;color:var(--color-accent-700)">7%</div>
+          <div style="fontSize:12.5px;color:var(--color-neutral-800);lineHeight:1.45">Tu aporte legal, en pesos y en UF</div>
+        </div>
+        <div style="padding:20px 18px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+          <div style="fontFamily:var(--font-heading);fontSize:32px;color:var(--color-accent-700)">3</div>
+          <div style="fontSize:12.5px;color:var(--color-neutral-800);lineHeight:1.45">Niveles de cobertura comparados</div>
+        </div>
+        <div style="padding:20px 18px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+          <div style="fontFamily:var(--font-heading);fontSize:32px;color:var(--color-accent-700)">7</div>
+          <div style="fontSize:12.5px;color:var(--color-neutral-800);lineHeight:1.45">Beneficios frente a tu plan actual</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="casos" data-reveal="1" style="maxWidth:1180px;margin:0 auto;padding:72px 20px">
+    <h6 style="color:var(--color-accent-700);margin:0 0 8px;textAlign:center">Testimonios</h6>
+    <h2 style="fontSize:clamp(34px,4.6vw,54px);lineHeight:1.04;margin:0 auto 34px;maxWidth:30ch;textAlign:center;textTransform:uppercase;letterSpacing:0.01em">Casos reales</h2>
+    <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:26px">
+      <div style="padding:28px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+        <div class="tag tag-accent" style="marginBottom:14px">Pareja joven · Santiago</div>
+        <p style="fontSize:16px;lineHeight:1.55;margin:0 0 18px">«Pagábamos casi 2 UF sobre el 7% por un plan que no usábamos. Nos reestructuró la cobertura pensando en el embarazo y quedamos pagando menos.»</p>
+        <div style="display:flex;align-items:center;gap:12px;paddingTop:14px;borderTop:1px solid var(--color-divider)">
+          <div style="width:38px;height:38px;background:var(--metal-silver);display:grid;place-items:center;fontFamily:var(--font-heading);fontSize:14px;color:var(--color-accent-700)">CM</div>
+          <div style="fontSize:13px;lineHeight:1.3">
+            <div style="fontFamily:var(--font-heading);fontSize:15px">Carolina M.</div>
+            <div style="color:var(--color-neutral-600)">Ingeniera · 2 cargas</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:28px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+        <div class="tag tag-accent" style="marginBottom:14px">Independiente · Viña</div>
+        <p style="fontSize:16px;lineHeight:1.55;margin:0 0 18px">«Siendo boleteador nadie me quería explicar nada. Me ordenó la cotización, el plan y los excedentes en una llamada de 30 minutos.»</p>
+        <div style="display:flex;align-items:center;gap:12px;paddingTop:14px;borderTop:1px solid var(--color-divider)">
+          <div style="width:38px;height:38px;background:var(--metal-silver);display:grid;place-items:center;fontFamily:var(--font-heading);fontSize:14px;color:var(--color-accent-700)">JR</div>
+          <div style="fontSize:13px;lineHeight:1.3">
+            <div style="fontFamily:var(--font-heading);fontSize:15px">Jorge R.</div>
+            <div style="color:var(--color-neutral-600)">Diseñador independiente</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:28px;background:#fff;border:1px solid var(--color-divider);boxShadow:0 10px 30px rgba(27,28,30,0.07)">
+        <div class="tag tag-accent" style="marginBottom:14px">Familia · Concepción</div>
+        <p style="fontSize:16px;lineHeight:1.55;margin:0 0 18px">«Mi hijo tiene un tratamiento permanente. Comparó cobertura de medicamentos y topes, no solo el precio. Eso marcó la diferencia.»</p>
+        <div style="display:flex;align-items:center;gap:12px;paddingTop:14px;borderTop:1px solid var(--color-divider)">
+          <div style="width:38px;height:38px;background:var(--metal-silver);display:grid;place-items:center;fontFamily:var(--font-heading);fontSize:14px;color:var(--color-accent-700)">PS</div>
+          <div style="fontSize:13px;lineHeight:1.3">
+            <div style="fontFamily:var(--font-heading);fontSize:15px">Paula S.</div>
+            <div style="color:var(--color-neutral-600)">Profesora · 3 cargas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="fontSize:13px;color:var(--color-neutral-600);marginTop:16px">Testimonios de ejemplo. Mándame los reales (nombre, ciudad y frase) y los reemplazo tal cual.</p>
+  </section>
+
+  <section id="cotiza" data-reveal="1" style="background:var(--color-surface);borderTop:1px solid var(--color-divider);borderBottom:1px solid var(--color-divider)">
+    <div id="caso" data-stack="1" style="maxWidth:1180px;margin:0 auto;padding:70px 20px;display:grid;gridTemplateColumns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:start">
+      <div>
+        <h6 style="color:var(--color-accent-700);margin:0 0 8px">Cotiza gratis</h6>
+        <h2 style="fontSize:36px;margin:0 0 16px;maxWidth:24ch">Cuéntanos tu caso y te respondo en menos de 24 horas</h2>
+        <p style="fontSize:16.5px;lineHeight:1.6;maxWidth:50ch">No necesitas tener el plan a mano. Con tu renta imponible y tus cargas puedo preparar una primera comparación y afinarla después contigo.</p>
+        <ul style="listStyle:none;padding:0;margin:22px 0 0;display:flex;flexDirection:column;gap:10px;fontSize:15px">
+          <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--color-accent);fontFamily:var(--font-heading)">—</span>Cotización sin costo y sin compromiso</li>
+          <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--color-accent);fontFamily:var(--font-heading)">—</span>Tus datos solo se usan para preparar la propuesta</li>
+          <li style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--color-accent);fontFamily:var(--font-heading)">—</span>Si tu plan actual conviene más, te lo digo</li>
+        </ul>
+      </div>
+      <form onSubmit="{{ enviar }}" style="boxShadow:0 18px 40px rgba(77,23,26,0.28);background:var(--metal);color:#fff;border:1px solid var(--silver);padding:30px;display:flex;flexDirection:column;gap:16px">
+        <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:16px">
+          <div class="field"><label style="color:#ffffff">Nombre y apellido</label><input class="input" name="nombre" type="text" required="{{ true }}" style="minHeight:42px;background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)"></div>
+          <div class="field"><label style="color:#ffffff">Teléfono / WhatsApp</label><input class="input" name="telefono" type="tel" required="{{ true }}" style="minHeight:42px;background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)"></div>
+        </div>
+        <div class="field"><label style="color:#ffffff">Renta imponible aprox.</label><input class="input" name="renta" type="text" placeholder="$1.200.000" style="minHeight:42px;background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)"></div>
+        <div class="field">
+          <label style="color:#ffffff">Tu situación hoy</label>
+          <div style="display:flex;flexWrap:wrap;gap:16px;marginTop:4px">
+            <label class="radio" style="color:#fff"><input type="radio" name="situacion" value="Estoy en Fonasa"><span class="dot" style="borderColor:rgba(255,255,255,0.75)"></span>Estoy en Fonasa</label>
+            <label class="radio" style="color:#fff"><input type="radio" name="situacion" value="Tengo isapre"><span class="dot" style="borderColor:rgba(255,255,255,0.75)"></span>Tengo isapre</label>
+            <label class="radio" style="color:#fff"><input type="radio" name="situacion" value="No lo sé"><span class="dot" style="borderColor:rgba(255,255,255,0.75)"></span>No lo sé</label>
+          </div>
+        </div>
+        <div class="field"><label style="color:#ffffff">Cuéntanos tu caso</label><textarea class="input" name="caso" placeholder="Cargas familiares, clínicas que usas, tratamientos en curso, presupuesto…" style="background:rgba(255,255,255,0.12);color:#fff;borderColor:rgba(255,255,255,0.45)"></textarea></div>
+        <button type="submit" class="btn btn-block" style="padding:14px 16px;fontSize:15px;minHeight:48px;whiteSpace:nowrap;background:#fff;color:var(--color-accent-700);borderColor:#fff" style-hover="background:var(--silver-2)">{{ textoBoton }}</button>
+        <p style="fontSize:12px;color:#ffffff;margin:0">Al enviar se abre WhatsApp con tus datos ya escritos, listos para mandarme.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="informacion" data-reveal="1" style="maxWidth:1180px;margin:0 auto;padding:72px 20px">
+    <h6 style="color:var(--color-accent-700);margin:0 0 8px;textAlign:center">Información importante</h6>
+    <h2 style="fontSize:clamp(36px,5vw,56px);lineHeight:1.04;margin:0 auto 34px;maxWidth:26ch;textAlign:center;textTransform:uppercase;letterSpacing:0.01em">Resuelvo tus dudas</h2>
+    <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:0 44px">
+      <details style="borderTop:1px solid var(--color-divider);padding:18px 0">
+        <summary style="display:flex;justify-content:space-between;gap:16px;cursor:pointer;fontFamily:var(--font-heading);fontSize:19px"><span>¿Qué es exactamente el 7%?</span><span style="color:var(--color-accent)">+</span></summary>
+        <p style="fontSize:14.5px;margin:12px 0 0;color:var(--color-neutral-800);maxWidth:58ch">Es la cotización obligatoria de salud que se descuenta de tu renta imponible, con un tope legal. Ese dinero se va a Fonasa o a la isapre que elijas: siempre lo pagas, la decisión es en qué cobertura lo usas.</p>
+      </details>
+      <details style="borderTop:1px solid var(--color-divider);padding:18px 0">
+        <summary style="display:flex;justify-content:space-between;gap:16px;cursor:pointer;fontFamily:var(--font-heading);fontSize:19px"><span>¿Puedo tener un plan que cueste solo mi 7%?</span><span style="color:var(--color-accent)">+</span></summary>
+        <p style="fontSize:14.5px;margin:12px 0 0;color:var(--color-neutral-800);maxWidth:58ch">Sí, existen planes que se ajustan a tu aporte. Si el valor del plan es menor a tu 7%, la diferencia queda como excedente a tu nombre; si es mayor, pagas la diferencia mensual.</p>
+      </details>
+      <details style="borderTop:1px solid var(--color-divider);padding:18px 0">
+        <summary style="display:flex;justify-content:space-between;gap:16px;cursor:pointer;fontFamily:var(--font-heading);fontSize:19px"><span>¿Qué pasa con mis preexistencias?</span><span style="color:var(--color-accent)">+</span></summary>
+        <p style="fontSize:14.5px;margin:12px 0 0;color:var(--color-neutral-800);maxWidth:58ch">Se declaran al momento de suscribir. Declararlas correctamente te protege: es lo que evita rechazos de cobertura más adelante. Te acompaño en ese paso.</p>
+      </details>
+      <details style="borderTop:1px solid var(--color-divider);padding:18px 0">
+        <summary style="display:flex;justify-content:space-between;gap:16px;cursor:pointer;fontFamily:var(--font-heading);fontSize:19px"><span>¿Cuánto demora el cambio?</span><span style="color:var(--color-accent)">+</span></summary>
+        <p style="fontSize:14.5px;margin:12px 0 0;color:var(--color-neutral-800);maxWidth:58ch">La suscripción se hace en una sesión y la vigencia empieza el mes siguiente al proceso administrativo. Te informo cada fecha por escrito.</p>
+      </details>
+      <details style="borderTop:1px solid var(--color-divider);padding:18px 0">
+        <summary style="display:flex;justify-content:space-between;gap:16px;cursor:pointer;fontFamily:var(--font-heading);fontSize:19px"><span>¿Tiene costo tu asesoría?</span><span style="color:var(--color-accent)">+</span></summary>
+        <p style="fontSize:14.5px;margin:12px 0 0;color:var(--color-neutral-800);maxWidth:58ch">No. Mi asesoría, la cotización y la comparación no tienen costo para ti.</p>
+      </details>
+      <details style="borderTop:1px solid var(--color-divider);padding:18px 0">
+        <summary style="display:flex;justify-content:space-between;gap:16px;cursor:pointer;fontFamily:var(--font-heading);fontSize:19px"><span>¿Y si soy independiente?</span><span style="color:var(--color-accent)">+</span></summary>
+        <p style="fontSize:14.5px;margin:12px 0 0;color:var(--color-neutral-800);maxWidth:58ch">También puedes cotizar. Trabajamos con tu renta declarada y armamos un plan que calce con tu flujo real de ingresos.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="contacto" data-reveal="1" style="background:var(--color-surface);borderTop:1px solid var(--color-divider)">
+    <div style="maxWidth:1180px;margin:0 auto;padding:68px 20px">
+      <h6 style="color:var(--color-accent-700);margin:0 0 8px;textAlign:center">Contacto</h6>
+      <h2 style="fontSize:clamp(36px,5vw,56px);lineHeight:1.04;margin:0 auto 14px;maxWidth:26ch;textAlign:center;textTransform:uppercase;letterSpacing:0.01em">Elige tu método de cotización</h2>
+      <p style="fontSize:16.5px;lineHeight:1.6;maxWidth:58ch;margin:0 auto 34px;textAlign:center">Cotizamos por el canal que te acomode. Todos llegan al mismo resultado: una comparación clara, sin costo y sin compromiso.</p>
+      <div style="maxWidth:880px;margin:0 auto;borderTop:1px solid var(--color-divider)">
+        <a href="{{ waLink }}" target="_blank" rel="noopener" data-crow="1" style="display:grid;gridTemplateColumns:44px minmax(0,1fr) auto;gap:20px;alignItems:center;padding:22px 10px;borderBottom:1px solid var(--color-divider);textDecoration:none;color:var(--color-text)" style-hover="background:#fff">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"></path></svg>
+          <div>
+            <h4 style="margin:0 0 4px;fontSize:20px">WhatsApp</h4>
+            <p style="fontSize:14px;margin:0;color:var(--color-neutral-800);lineHeight:1.5">Lo más rápido: me escribes, te pido tres datos y te mando la comparación.</p>
+          </div>
+          <span style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-accent-700);whiteSpace:nowrap">{{ telefonoFmt }}</span>
+        </a>
+        <a href="https://www.instagram.com/nico.asesorias/" target="_blank" rel="noopener" data-crow="1" style="display:grid;gridTemplateColumns:44px minmax(0,1fr) auto;gap:20px;alignItems:center;padding:22px 10px;borderBottom:1px solid var(--color-divider);textDecoration:none;color:var(--color-text)" style-hover="background:#fff">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.6" fill="var(--color-accent)"></circle></svg>
+          <div>
+            <h4 style="margin:0 0 4px;fontSize:20px">Instagram</h4>
+            <p style="fontSize:14px;margin:0;color:var(--color-neutral-800);lineHeight:1.5">Contenido sobre planes, excedentes y tu 7%. También puedes escribirme por mensaje directo.</p>
+          </div>
+          <span style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-accent-700);whiteSpace:nowrap">@nico.asesorias</span>
+        </a>
+        <a href="{{ mailLink }}" data-crow="1" style="display:grid;gridTemplateColumns:44px minmax(0,1fr) auto;gap:20px;alignItems:center;padding:22px 10px;borderBottom:1px solid var(--color-divider);textDecoration:none;color:var(--color-text)" style-hover="background:#fff">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="1"></rect><path d="m2 6 10 7L22 6"></path></svg>
+          <div>
+            <h4 style="margin:0 0 4px;fontSize:20px">Correo electrónico</h4>
+            <p style="fontSize:14px;margin:0;color:var(--color-neutral-800);lineHeight:1.5">Si prefieres todo por escrito: te envío la propuesta con los valores detallados.</p>
+          </div>
+          <span style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-accent-700);whiteSpace:nowrap">{{ correo }}</span>
+        </a>
+        <div data-crow="1" style="display:grid;gridTemplateColumns:44px minmax(0,1fr) auto;gap:20px;alignItems:center;padding:22px 10px;borderBottom:1px solid var(--color-divider);textDecoration:none;color:var(--color-text)" style-hover="background:#fff">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <div>
+            <h4 style="margin:0 0 4px;fontSize:20px">Presencial</h4>
+            <p style="fontSize:14px;margin:0;color:var(--color-neutral-800);lineHeight:1.5">Nos juntamos donde te acomode. Llevo el tarifario y firmamos ahí mismo si decides avanzar.</p>
+          </div>
+          <span style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-accent-700);whiteSpace:nowrap">Región Metropolitana</span>
+        </div>
+        <a href="{{ telLink }}" data-crow="1" style="display:grid;gridTemplateColumns:44px minmax(0,1fr) auto;gap:20px;alignItems:center;padding:22px 10px;borderBottom:1px solid var(--color-divider);textDecoration:none;color:var(--color-text)" style-hover="background:#fff">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2.1Z"></path></svg>
+          <div>
+            <h4 style="margin:0 0 4px;fontSize:20px">Llamada telefónica</h4>
+            <p style="fontSize:14px;margin:0;color:var(--color-neutral-800);lineHeight:1.5">Agendamos 20 minutos y revisamos tu caso por teléfono, sin pantallas.</p>
+          </div>
+          <span style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-accent-700);whiteSpace:nowrap">{{ telefonoFmt }}</span>
+        </a>
+        <a href="{{ waLinkVideo }}" target="_blank" rel="noopener" data-crow="1" style="display:grid;gridTemplateColumns:44px minmax(0,1fr) auto;gap:20px;alignItems:center;padding:22px 10px;borderBottom:1px solid var(--color-divider);textDecoration:none;color:var(--color-text)" style-hover="background:#fff">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><path d="m23 7-7 5 7 5V7Z"></path><rect x="1" y="5" width="15" height="14" rx="2"></rect></svg>
+          <div>
+            <h4 style="margin:0 0 4px;fontSize:20px">Videollamada</h4>
+            <p style="fontSize:14px;margin:0;color:var(--color-neutral-800);lineHeight:1.5">Compartimos pantalla y vemos juntos el tarifario y la comparación.</p>
+          </div>
+          <span style="fontFamily:var(--font-heading);fontSize:15px;color:var(--color-accent-700);whiteSpace:nowrap">Agendar por WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:var(--color-neutral-900);color:#fff">
+    <div style="maxWidth:1180px;margin:0 auto;padding:56px 20px 40px;display:grid;gridTemplateColumns:repeat(auto-fit,minmax(220px,1fr));gap:36px">
+      <div>
+        <div style="fontFamily:var(--font-heading);fontSize:22px">{{ nombre }}</div>
+        <div style="fontSize:12px;letterSpacing:0.14em;textTransform:uppercase;color:var(--silver)">Ejecutivo de ventas · Banmédica</div>
+        <p style="fontSize:14px;color:var(--color-neutral-300);marginTop:14px;maxWidth:34ch">Asesoría en planes de isapre, seguros complementarios y uso inteligente de tu 7%.</p>
+      </div>
+      <div>
+        <h6 style="color:var(--silver);margin:0 0 12px">Contacto</h6>
+        <div style="display:flex;flexDirection:column;gap:8px;fontSize:14.5px">
+          <a href="{{ waLink }}" target="_blank" rel="noopener" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">WhatsApp {{ telefonoFmt }}</a>
+          <a href="{{ mailLink }}" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">{{ correo }}</a>
+          <a href="https://www.instagram.com/nico.asesorias/" target="_blank" rel="noopener" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">Instagram @nico.asesorias</a>
+          <span style="color:var(--color-neutral-300)">WhatsApp · Instagram · correo · presencial · llamada · videollamada</span>
+        </div>
+      </div>
+      <div>
+        <h6 style="color:var(--silver);margin:0 0 12px">Servicios</h6>
+        <div style="display:flex;flexDirection:column;gap:8px;fontSize:14.5px">
+          <a href="#informacion" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">Información importante</a>
+          <a href="#pasos" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">Cómo funciona</a>
+          <a href="#caso" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">Cuéntanos tu caso</a>
+          <a href="calculadora.html" style="color:#fff;textDecoration:none" style-hover="color:var(--silver)">Calculadora de valor</a>
+        </div>
+      </div>
+      <div>
+        <h6 style="color:var(--silver);margin:0 0 12px">Horario</h6>
+        <div style="fontSize:14.5px;color:var(--color-neutral-300);lineHeight:1.7">Lunes a viernes 9:00 – 19:00<br>Sábado 10:00 – 13:00<br>WhatsApp siempre abierto</div>
+      </div>
+    </div>
+    <div style="borderTop:1px solid rgba(255,255,255,0.15)">
+      <div style="maxWidth:1180px;margin:0 auto;padding:16px 20px;fontSize:11.5px;color:var(--color-neutral-400);display:flex;flexWrap:wrap;gap:12px;justify-content:space-between">
+        <span>© 2026 {{ nombre }}. Asesoría independiente en salud previsional.</span>
+        <span>Los valores mostrados son estimaciones de referencia y no constituyen una oferta contractual.</span>
+      </div>
+    </div>
+  </footer>
+
+  <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp" style="position:fixed;right:22px;bottom:22px;zIndex:60;width:60px;height:60px;borderRadius:50%;display:grid;place-items:center;background:#25D366;color:#fff;border:0;boxShadow:0 8px 22px rgba(0,0,0,0.3)" style-hover="background:#1EBE5A">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;nombre&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nicolás Olivares Moraga&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;56994754618&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;correo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nolivares@banmedica.cl&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;valorUF&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:39500,&quot;min&quot;:30000,&quot;max&quot;:60000,&quot;step&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Calculadora&quot;}}">
+class Component extends DCLogic {
+  state = { renta: 1500000, cargas: 1, menuAbierto: false, enviado: false, slide: 0, visible: true, serviciosVisibles: false, menuMovil: false };
+
+  titulares = [
+    { titulo: "Optimiza tu 7%", bajada: "Tu cotización obligatoria ya se descuenta cada mes. La pregunta es qué cobertura estás recibiendo por ella." },
+    { titulo: "Compara antes de firmar", bajada: "Te muestro tu plan actual y dos o tres alternativas reales, con valores en UF y en pesos, lado a lado." },
+    { titulo: "Cobertura a tu medida", bajada: "Armamos el plan según tu renta, tus cargas, tus clínicas y tu presupuesto. Nada de paquetes genéricos." },
+    { titulo: "Asesoría sin costo", bajada: "Cotizar, comparar y consultarme no te cuesta nada. Si tu plan actual conviene más, te lo digo." }
+  ];
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({ visible: false });
+      this.fade = setTimeout(() => {
+        this.setState((s) => ({ slide: (s.slide + 1) % this.titulares.length, visible: true }));
+      }, 620);
+    }, 5200);
+    this.observarSecciones();
+    [120, 600, 1500].forEach((t) => setTimeout(() => this.observarSecciones(), t));
+    this.onScrollReveal = () => this.observarSecciones();
+    window.addEventListener("scroll", this.onScrollReveal, { passive: true });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    clearTimeout(this.fade);
+    if (this.io) this.io.disconnect();
+    clearTimeout(this.revealSafety);
+    if (this.onScrollReveal) window.removeEventListener("scroll", this.onScrollReveal);
+  }
+
+  componentDidUpdate() { this.observarSecciones(); }
+
+  observarSecciones() {
+    if (typeof IntersectionObserver !== "function") return;
+    if (!this.io) {
+      this.io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.remove("reveal-armed");
+            en.target.classList.add("is-in");
+            this.io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: "0px 0px -6% 0px" });
+    }
+    const vh = window.innerHeight || 800;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.classList.contains("is-in") || el.dataset.revealReady === "1") return;
+      el.dataset.revealReady = "1";
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.9) {                 // ya visible: se muestra sin ocultarse
+        el.classList.add("is-in");
+        return;
+      }
+      el.classList.add("reveal-armed");
+      this.io.observe(el);
+    });
+    // red de seguridad: si algo quedara armado sin dispararse, se revela
+    clearTimeout(this.revealSafety);
+    this.revealSafety = setTimeout(() => {
+      document.querySelectorAll("[data-reveal].reveal-armed").forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < (window.innerHeight || 800)) {
+          el.classList.remove("reveal-armed");
+          el.classList.add("is-in");
+        }
+      });
+    }, 1200);
+  }
+
+  clp(n) {
+    return "$" + Math.round(n).toLocaleString("es-CL");
+  }
+
+  renderVals() {
+    const uf = Number(this.props.valorUF) || 39500;
+    const topeUF = 87.8;
+    const renta = Math.max(0, Number(this.state.renta) || 0);
+    const cargas = Math.max(0, Number(this.state.cargas) || 0);
+    const base = Math.min(renta, topeUF * uf);
+    const aporte = base * 0.07;
+
+    const defs = [
+      { nivel: "Nivel 1", nombre: "Cobertura esencial", uf: 2.6, detalle: "Red preferente, hospitalización con tope acotado. Ideal si usas poco el sistema." },
+      { nivel: "Nivel 2", nombre: "Cobertura equilibrada", uf: 3.8, detalle: "Ambulatorio amplio y clínicas en convenio. El más pedido para familias." },
+      { nivel: "Nivel 3", nombre: "Cobertura amplia", uf: 5.4, detalle: "Topes altos, libre elección y maternidad reforzada. Para uso frecuente." }
+    ];
+
+    const planes = defs.map((d) => {
+      const precio = d.uf * uf * (1 + cargas * 0.55);
+      const dif = precio - aporte;
+      return {
+        nivel: d.nivel,
+        nombre: d.nombre,
+        detalle: d.detalle,
+        precioFmt: this.clp(precio) + " / " + (d.uf * (1 + cargas * 0.55)).toFixed(2) + " UF",
+        etiquetaDif: dif > 0 ? "Pagas además de tu 7%" : "Excedente a tu favor",
+        difFmt: this.clp(Math.abs(dif)) + (dif > 0 ? " al mes" : " al mes")
+      };
+    });
+
+    const tel = String(this.props.whatsapp || "56994754618").replace(/[^0-9]/g, "");
+    const msg = encodeURIComponent("Hola, vengo de tu página y quiero cotizar un plan de isapre.");
+
+    return {
+      serviciosVisibles: !!this.state.serviciosVisibles,
+      labelServicios: this.state.serviciosVisibles ? "Ocultar servicios" : "Ver mis servicios",
+      toggleServicios: () => this.setState((st) => ({ serviciosVisibles: !st.serviciosVisibles })),
+      tituloRotativo: this.titulares[this.state.slide].titulo,
+      bajadaRotativa: this.titulares[this.state.slide].bajada,
+      tituloOpacidad: this.state.visible ? 1 : 0,
+      puntos: this.titulares.map((t, i) => ({
+        color: i === this.state.slide ? "#ffffff" : "rgba(255,255,255,0.35)",
+        colorInk: i === this.state.slide ? "var(--color-accent)" : "var(--color-neutral-300)"
+      })),
+      nombre: this.props.nombre ?? "Nicolás Olivares Moraga",
+      telefonoFmt: "+56 9 9475 4618",
+      correo: this.props.correo ?? "Nolivares@banmedica.cl",
+      mailLink: "mailto:" + (this.props.correo ?? "Nolivares@banmedica.cl") + "?subject=" + encodeURIComponent("Quiero cotizar un plan de isapre"),
+      telLink: "tel:+" + tel,
+      waLink: "https://wa.me/" + tel + "?text=" + msg,
+      waLinkVideo: "https://wa.me/" + tel + "?text=" + encodeURIComponent("Hola, quiero agendar una videollamada para revisar mi plan."),
+      ufFmt: this.clp(uf),
+      renta: this.state.renta,
+      cargas: this.state.cargas,
+      aporteFmt: this.clp(aporte),
+      aporteUF: (aporte / uf).toFixed(2) + " UF",
+      planes,
+      menuAbierto: this.state.menuAbierto,
+      menuMovil: this.state.menuMovil,
+      iconoMenu: this.state.menuMovil ? "M18 6 6 18M6 6l12 12" : "M4 7h16M4 12h16M4 17h16",
+      toggleMovil: () => this.setState((s) => ({ menuMovil: !s.menuMovil })),
+      cerrarMovil: () => this.setState({ menuMovil: false }),
+      textoBoton: this.state.enviado ? "Abriendo WhatsApp…" : "Enviar por WhatsApp",
+      setRenta: (e) => this.setState({ renta: e.target.value }),
+      setCargas: (e) => this.setState({ cargas: e.target.value }),
+      abrirMenu: () => this.setState({ menuAbierto: true }),
+      cerrarMenu: () => this.setState({ menuAbierto: false }),
+      toggleMenu: () => this.setState((s) => ({ menuAbierto: !s.menuAbierto })),
+      enviar: (e) => {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        const g = (k) => (f.get(k) || "—");
+        const texto = [
+          "Hola Nicolás, quiero cotizar un plan de isapre.",
+          "Nombre: " + g("nombre"),
+          "Teléfono: " + g("telefono"),
+          "Renta imponible: " + g("renta"),
+          "Situación: " + g("situacion"),
+          "Mi caso: " + g("caso")
+        ].join("\n");
+        window.open("https://wa.me/" + tel + "?text=" + encodeURIComponent(texto), "_blank", "noopener");
+        this.setState({ enviado: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
