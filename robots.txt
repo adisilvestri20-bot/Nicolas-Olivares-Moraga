@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /tarifario.pdf
+
+Sitemap: https://olivares-asesoria.cl/sitemap.xml

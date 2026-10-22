@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Agenda una asesoría | Nicolás Olivares · Banmédica</title>
+<meta name="description" content="Reserva una hora de asesoría online o presencial para resolver tus dudas sobre planes de isapre. Lunes a domingo, de 08:00 a 00:00.">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#1d1a1b;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:#7a2226}
+a:hover{color:#5a171a}
+:focus-visible{outline:3px solid #c9a24a;outline-offset:2px}
+input,textarea,button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="fontFamily:Arial,Helvetica,sans-serif;color:#1d1a1b;background:#fff;minHeight:100vh">
+
+  <header style="position:sticky;top:0;zIndex:50;background:rgba(255,255,255,0.96);backdropFilter:blur(8px);borderBottom:1px solid #ece7e7">
+    <div style="maxWidth:1160px;margin:0 auto;padding:10px 18px;display:flex;alignItems:center;gap:16px">
+      <a href="index.html" style="display:flex;flexDirection:column;lineHeight:1.15;textDecoration:none;color:#1d1a1b;marginRight:auto;minWidth:0;minHeight:44px;justifyContent:center">
+        <span style="fontSize:19px;fontWeight:700">Nicolás Olivares</span>
+        <span style="fontSize:11px;letterSpacing:0.08em;textTransform:uppercase;color:#5f5759">Ejecutivo Banmédica</span>
+      </a>
+      <a href="index.html" style="display:inline-flex;alignItems:center;minHeight:44px;padding:0 6px;color:#1d1a1b;textDecoration:none;fontSize:15px;fontWeight:600" style-hover="color:#7a2226">Volver al inicio</a>
+    </div>
+  </header>
+
+  <section style="background:linear-gradient(160deg,#4f1518 0%,#7a2226 52%,#5c191c 100%);color:#fff">
+    <div style="maxWidth:900px;margin:0 auto;padding:44px 18px 40px;textAlign:center">
+      <div style="display:inline-flex;padding:7px 14px;borderRadius:12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.28);fontSize:13px">Lunes a domingo · 08:00 a 00:00</div>
+      <h1 style="fontSize:clamp(32px,5.4vw,52px);lineHeight:1.08;margin:16px 0 12px;fontWeight:700">Agenda tu asesoría</h1>
+      <p style="fontSize:16px;lineHeight:1.6;margin:0 auto;maxWidth:48ch;color:#f6eded">Elige día, hora y si prefieres que conversemos online o en persona. Te confirmo la reserva por WhatsApp.</p>
+    </div>
+  </section>
+
+  <section style="maxWidth:1100px;margin:0 auto;padding:36px 18px 72px">
+    <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;alignItems:start">
+
+      <div style="border:1px solid #ece7e7;borderRadius:20px;padding:22px;boxShadow:0 10px 30px rgba(60,20,22,0.07)">
+        <div style="fontSize:13px;fontWeight:700;letterSpacing:0.08em;textTransform:uppercase;color:#7a2226;marginBottom:12px">1 · Modalidad</div>
+        <div style="display:grid;gridTemplateColumns:1fr 1fr;gap:10px;marginBottom:26px">
+          <button type="button" onClick="{{ setOnline }}" style="minHeight:52px;borderRadius:14px;border:2px solid {{ onlineBorde }};background:{{ onlineFondo }};color:{{ onlineTexto }};fontSize:16px;fontWeight:700;cursor:pointer">Online</button>
+          <button type="button" onClick="{{ setPresencial }}" style="minHeight:52px;borderRadius:14px;border:2px solid {{ presBorde }};background:{{ presFondo }};color:{{ presTexto }};fontSize:16px;fontWeight:700;cursor:pointer">Presencial</button>
+        </div>
+        <p style="fontSize:14px;lineHeight:1.5;margin:-14px 0 24px;color:#5f5759">{{ modalidadNota }}</p>
+
+        <div style="fontSize:13px;fontWeight:700;letterSpacing:0.08em;textTransform:uppercase;color:#7a2226;marginBottom:12px">2 · Día</div>
+        <div style="display:flex;alignItems:center;justifyContent:space-between;gap:10px;marginBottom:12px">
+          <button type="button" onClick="{{ mesAnterior }}" disabled="{{ sinAnterior }}" aria-label="Mes anterior" style="width:44px;height:44px;borderRadius:50%;border:1.5px solid #d8cfd0;background:#fff;color:#7a2226;fontSize:20px;cursor:pointer;opacity:{{ anteriorOpacidad }}">‹</button>
+          <div style="fontSize:18px;fontWeight:700;textTransform:capitalize">{{ mesTitulo }}</div>
+          <button type="button" onClick="{{ mesSiguiente }}" disabled="{{ sinSiguiente }}" aria-label="Mes siguiente" style="width:44px;height:44px;borderRadius:50%;border:1.5px solid #d8cfd0;background:#fff;color:#7a2226;fontSize:20px;cursor:pointer;opacity:{{ siguienteOpacidad }}">›</button>
+        </div>
+        <div style="display:grid;gridTemplateColumns:repeat(7,minmax(0,1fr));gap:4px;marginBottom:4px">
+          <sc-for list="{{ diasSemana }}" as="d" hint-placeholder-count="7">
+            <div style="textAlign:center;fontSize:12px;fontWeight:700;color:#5f5759;padding:6px 0">{{ d }}</div>
+          </sc-for>
+        </div>
+        <div style="display:grid;gridTemplateColumns:repeat(7,minmax(0,1fr));gap:4px">
+          <sc-for list="{{ celdas }}" as="c" hint-placeholder-count="35">
+            <button type="button" onClick="{{ c.onClick }}" disabled="{{ c.disabled }}" aria-label="{{ c.aria }}" style="height:44px;borderRadius:12px;border:0;background:{{ c.fondo }};color:{{ c.texto }};fontSize:15px;fontWeight:{{ c.peso }};cursor:{{ c.cursor }};visibility:{{ c.visible }}">{{ c.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="border:1px solid #ece7e7;borderRadius:20px;padding:22px;boxShadow:0 10px 30px rgba(60,20,22,0.07)">
+        <div style="fontSize:13px;fontWeight:700;letterSpacing:0.08em;textTransform:uppercase;color:#7a2226;marginBottom:4px">3 · Hora</div>
+        <div style="fontSize:15px;marginBottom:14px;color:#4f4749">{{ fechaTexto }}</div>
+        <sc-if value="{{ hayFecha }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;gridTemplateColumns:repeat(auto-fill,minmax(84px,1fr));gap:8px">
+            <sc-for list="{{ horas }}" as="h" hint-placeholder-count="16">
+              <button type="button" onClick="{{ h.onClick }}" disabled="{{ h.disabled }}" style="minHeight:46px;borderRadius:12px;border:1.5px solid {{ h.borde }};background:{{ h.fondo }};color:{{ h.texto }};fontSize:15px;fontWeight:700;cursor:{{ h.cursor }};textDecoration:{{ h.tachado }}">{{ h.label }}</button>
+            </sc-for>
+          </div>
+          <p style="fontSize:13px;color:#5f5759;margin:10px 0 0">Bloques de 1 hora. La última sesión parte a las 23:00.</p>
+        </sc-if>
+
+        <div style="fontSize:13px;fontWeight:700;letterSpacing:0.08em;textTransform:uppercase;color:#7a2226;margin:26px 0 12px">4 · Tus datos</div>
+        <div style="display:flex;flexDirection:column;gap:12px">
+          <label style="display:flex;flexDirection:column;gap:6px;fontSize:14px;fontWeight:700">Nombre
+            <input type="text" value="{{ nombre }}" onChange="{{ setNombre }}" autoComplete="name" style="minHeight:50px;padding:0 14px;fontSize:16px;border:1.5px solid #d8cfd0;borderRadius:12px">
+          </label>
+          <label style="display:flex;flexDirection:column;gap:6px;fontSize:14px;fontWeight:700">Teléfono
+            <input type="tel" value="{{ telefono }}" onChange="{{ setTelefono }}" autoComplete="tel" placeholder="+56 9 ..." style="minHeight:50px;padding:0 14px;fontSize:16px;border:1.5px solid #d8cfd0;borderRadius:12px">
+          </label>
+          <label style="display:flex;flexDirection:column;gap:6px;fontSize:14px;fontWeight:700">¿Qué quieres resolver? (opcional)
+            <textarea value="{{ motivo }}" onChange="{{ setMotivo }}" rows="3" style="padding:12px 14px;fontSize:16px;border:1.5px solid #d8cfd0;borderRadius:12px;resize:vertical"></textarea>
+          </label>
+        </div>
+
+        <div style="marginTop:22px;padding:16px;borderRadius:14px;background:#faf7f7;border:1px solid #ece7e7;fontSize:15px;lineHeight:1.6">
+          <div style="fontWeight:700;marginBottom:4px">Resumen</div>
+          <div>{{ resumen }}</div>
+        </div>
+
+        <button type="button" onClick="{{ reservar }}" disabled="{{ noListo }}" style="marginTop:16px;width:100%;minHeight:54px;borderRadius:999px;border:0;background:{{ botonFondo }};color:#fff;fontSize:16.5px;fontWeight:700;cursor:{{ botonCursor }}">{{ botonTexto }}</button>
+        <p style="fontSize:13px;color:#5f5759;margin:10px 0 0;textAlign:center">{{ ayuda }}</p>
+      </div>
+    </div>
+  </section>
+
+  <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp" style="position:fixed;right:16px;bottom:16px;zIndex:60;width:60px;height:60px;borderRadius:50%;display:grid;placeItems:center;background:#0e7c3f;color:#fff;boxShadow:0 10px 24px rgba(0,0,0,0.3)" style-hover="background:#0a6633;color:#fff">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.72-2.92-1.15-4.76-4.2-4.9-4.4-.15-.2-1.17-1.56-1.17-2.97 0-1.41.73-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .39 0 .55.01.18 0 .42-.07.65.49.24.58.82 2 .89 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.6.17.29.76 1.25 1.62 2.02 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.69.8 1.98.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"></path></svg>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;56994754618&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;mesesAdelante&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:6,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Agenda&quot;},&quot;horasOcupadas&quot;:{&quot;editor&quot;:null,&quot;default&quot;:{},&quot;tsType&quot;:&quot;Record&lt;string,string[]&gt;&quot;}}">
+class Component extends DCLogic {
+  state = { mes: 0, fecha: null, hora: null, modalidad: "Online", nombre: "", telefono: "", motivo: "", enviado: false };
+
+  meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  dias = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+
+  hoy() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+  key(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+  parse(k) { const [y,m,d] = k.split("-").map(Number); return new Date(y, m-1, d); }
+
+  renderVals() {
+    const tel = String(this.props.whatsapp || "56994754618").replace(/[^0-9]/g, "");
+    const maxMeses = Number(this.props.mesesAdelante) || 2;
+    const hoy = this.hoy();
+    const ahora = new Date();
+    const base = new Date(hoy.getFullYear(), hoy.getMonth() + this.state.mes, 1);
+    const limite = new Date(hoy); limite.setDate(limite.getDate() + 60);
+
+    const celdas = [];
+    const offset = (base.getDay() + 6) % 7;
+    for (let i = 0; i < offset; i++) celdas.push({ label: "", disabled: true, visible: "hidden", fondo: "transparent", texto: "#1d1a1b", peso: 400, cursor: "default", aria: "", onClick: () => {} });
+    const diasMes = new Date(base.getFullYear(), base.getMonth() + 1, 0).getDate();
+    for (let n = 1; n <= diasMes; n++) {
+      const d = new Date(base.getFullYear(), base.getMonth(), n);
+      const k = this.key(d);
+      const pasado = d < hoy || d > limite;
+      const esHoy = d.getTime() === hoy.getTime();
+      const sinHoras = esHoy && ahora.getHours() >= 23;
+      const dis = pasado || sinHoras;
+      const sel = this.state.fecha === k;
+      celdas.push({
+        label: String(n),
+        disabled: dis,
+        visible: "visible",
+        fondo: sel ? "#7a2226" : dis ? "transparent" : esHoy ? "#f3eaea" : "#faf7f7",
+        texto: sel ? "#ffffff" : dis ? "#b9afb0" : "#1d1a1b",
+        peso: sel || esHoy ? 700 : 400,
+        cursor: dis ? "not-allowed" : "pointer",
+        aria: n + " de " + this.meses[d.getMonth()],
+        onClick: () => { if (!dis) this.setState({ fecha: k, hora: null, enviado: false }); }
+      });
+    }
+
+    let horas = [];
+    let fechaTexto = "Primero elige un día en el calendario.";
+    if (this.state.fecha) {
+      const f = this.parse(this.state.fecha);
+      fechaTexto = this.dias[f.getDay()] + " " + f.getDate() + " de " + this.meses[f.getMonth()];
+      fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+      const esHoy = f.getTime() === hoy.getTime();
+      const ocupadas = this.props.horasOcupadas || {};
+      const bloqueadas = ocupadas[this.state.fecha] || [];
+      for (let h = 8; h <= 23; h++) {
+        const label = String(h).padStart(2, "0") + ":00";
+        const pasada = esHoy && h <= ahora.getHours();
+        const ocupada = bloqueadas.includes(label);
+        const dis = pasada || ocupada;
+        const sel = this.state.hora === label;
+        horas.push({
+          label, disabled: dis,
+          borde: sel ? "#7a2226" : dis ? "#ece7e7" : "#d8cfd0",
+          fondo: sel ? "#7a2226" : dis ? "#f6f4f4" : "#fff",
+          texto: sel ? "#fff" : dis ? "#a99fa0" : "#1d1a1b",
+          cursor: dis ? "not-allowed" : "pointer",
+          tachado: ocupada ? "line-through" : "none",
+          onClick: () => { if (!dis) this.setState({ hora: label, enviado: false }); }
+        });
+      }
+    }
+
+    const listo = !!(this.state.fecha && this.state.hora && this.state.nombre.trim() && this.state.telefono.trim());
+    const fin = this.state.hora ? String(Number(this.state.hora.slice(0,2)) + 1 === 24 ? "00" : String(Number(this.state.hora.slice(0,2)) + 1).padStart(2,"0")) + ":00" : "";
+    const resumen = this.state.fecha && this.state.hora
+      ? fechaTexto + ", de " + this.state.hora + " a " + fin + " · " + this.state.modalidad
+      : this.state.fecha ? fechaTexto + " · elige una hora" : "Aún no eliges día ni hora.";
+
+    const on = this.state.modalidad === "Online";
+    const msg = "Hola Nicolás, quiero reservar una asesoría.\n" +
+      "Modalidad: " + this.state.modalidad + "\n" +
+      "Día: " + fechaTexto + "\n" +
+      "Hora: " + (this.state.hora || "") + " a " + fin + "\n" +
+      "Nombre: " + this.state.nombre + "\n" +
+      "Teléfono: " + this.state.telefono +
+      (this.state.motivo.trim() ? "\nConsulta: " + this.state.motivo.trim() : "");
+
+    return {
+      waLink: "https://wa.me/" + tel + "?text=" + encodeURIComponent("Hola Nicolás, quiero agendar una asesoría."),
+      setOnline: () => this.setState({ modalidad: "Online" }),
+      setPresencial: () => this.setState({ modalidad: "Presencial" }),
+      onlineBorde: on ? "#7a2226" : "#d8cfd0", onlineFondo: on ? "#7a2226" : "#fff", onlineTexto: on ? "#fff" : "#1d1a1b",
+      presBorde: on ? "#d8cfd0" : "#7a2226", presFondo: on ? "#fff" : "#7a2226", presTexto: on ? "#1d1a1b" : "#fff",
+      modalidadNota: on ? "Videollamada por Google Meet, Zoom o WhatsApp. Te envío el enlace al confirmar." : "Nos juntamos en un punto de la Región Metropolitana que te acomode. Coordinamos el lugar al confirmar.",
+      mesTitulo: this.meses[base.getMonth()] + " " + base.getFullYear(),
+      sinAnterior: this.state.mes <= 0, anteriorOpacidad: this.state.mes <= 0 ? 0.35 : 1,
+      sinSiguiente: this.state.mes >= maxMeses, siguienteOpacidad: this.state.mes >= maxMeses ? 0.35 : 1,
+      mesAnterior: () => this.setState((s) => ({ mes: Math.max(0, s.mes - 1) })),
+      mesSiguiente: () => this.setState((s) => ({ mes: Math.min(maxMeses, s.mes + 1) })),
+      diasSemana: ["L","M","M","J","V","S","D"],
+      celdas, horas, hayFecha: !!this.state.fecha, fechaTexto,
+      nombre: this.state.nombre, telefono: this.state.telefono, motivo: this.state.motivo,
+      setNombre: (e) => this.setState({ nombre: e.target.value }),
+      setTelefono: (e) => this.setState({ telefono: e.target.value }),
+      setMotivo: (e) => this.setState({ motivo: e.target.value }),
+      resumen,
+      noListo: !listo,
+      botonFondo: listo ? "#0e7c3f" : "#9a9093",
+      botonCursor: listo ? "pointer" : "not-allowed",
+      botonTexto: this.state.enviado ? "Reserva enviada · revisa WhatsApp" : "Reservar y confirmar por WhatsApp",
+      ayuda: listo ? "Se abrirá WhatsApp con tu reserva escrita. Solo tienes que enviarla." : "Completa día, hora, nombre y teléfono para reservar.",
+      reservar: () => {
+        if (!listo) return;
+        window.open("https://wa.me/" + tel + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+        this.setState({ enviado: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

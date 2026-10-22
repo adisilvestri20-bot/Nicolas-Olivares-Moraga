@@ -1,41 +1,31 @@
-# Sitio web · Nicolás Olivares Moraga — Planes de salud Banmédica
+# Sitio web · Nicolás Olivares Moraga — Asesor Banmédica
 
-Sitio estático de una sola carpeta. No necesita servidor, base de datos ni compilación:
-basta subir **todos** los archivos de esta carpeta al mismo nivel en tu hosting.
+Sitio estático, sin compilación. Todos los archivos van en la **raíz del repositorio** (sin carpetas).
 
 ## Archivos
 
-| Archivo | Qué es |
-| --- | --- |
-| index.html | Página principal: portada, presentación, servicios, 3 pasos, casos, cotiza gratis, preguntas frecuentes y contacto |
-| calculadora.html | Comparador / calculadora de valor del 7% con los valores base del tarifario |
-| styles.css | Hoja de estilos (tokens de color, tipografías y componentes) |
-| support.js | Runtime que monta las páginas |
-| ds-bundle.js | Complemento del sistema de diseño |
-| image-slot.js | Soporte del marco de la foto ejecutiva |
-| portada-banmedica.png | Foto de fondo de la portada |
-| banmedica.png | Logo Banmédica usado sobre la sección de servicios |
-| foto-ejecutiva.jpeg | Tu foto ejecutiva |
-| tarifario.pdf | Tarifario Santiago 01/09/2026 (referencia interna, no se muestra en el sitio) |
+- `index.html` — página principal (portada con textos rotativos, cómo funciona, calculadora, planes por perfil, casos reales, certificaciones, preguntas frecuentes, contacto)
+- `calculadora.html` — comparador completo con valores base del tarifario
+- `agenda.html` — reserva de horas online o presencial (lunes a domingo, 08:00–00:00); confirma por WhatsApp
+- `support.js`, `styles.css`, `ds-bundle.js` — necesarios para que las páginas funcionen
+- `foto-ejecutiva.jpeg`, `fachada-banmedica.jpeg`, `og-portada.jpg` — imágenes
+- `certificado-*.pdf` — certificaciones enlazadas desde la página
+- `tarifario.pdf` — referencia interna (no está enlazado)
+- `robots.txt`, `sitemap.xml`, `.nojekyll` — SEO y GitHub Pages
 
-## Cómo publicarlo
+## Subir a GitHub
 
-1. Sube todos los archivos juntos, sin crear subcarpetas.
-2. Verifica que `index.html` quede en la raíz del dominio.
-3. Listo: `https://tudominio.cl/` abre la portada y `https://tudominio.cl/calculadora.html` el comparador.
+1. Borra del repositorio los archivos antiguos que ya no aparecen en esta lista (por ejemplo `image-slot.js`, `banmedica.png`, `portada-banmedica.png`).
+2. Sube todos estos archivos a la raíz y haz commit.
+3. Si usas GitHub Pages: Settings → Pages → Branch `main` / carpeta `/ (root)`.
 
-Funciona igual en Netlify (arrastrar la carpeta), Vercel, GitHub Pages, cPanel o cualquier hosting con FTP.
+## Datos editables
 
-## Datos que puedes editar sin tocar el diseño
+- WhatsApp: `56994754618` · Correo: `Nolivares@banmedica.cl` · Instagram: `nico.asesorias`
+- Valor UF: busca `39500` en `index.html` y `calculadora.html`
+- Dominio SEO: busca `olivares-asesoria.cl` en `index.html`, `robots.txt` y `sitemap.xml`
 
-- **WhatsApp:** busca `56994754618` y reemplázalo por otro número (formato internacional, sin + ni espacios).
-- **Correo:** busca `Nolivares@banmedica.cl`.
-- **Valor de la UF:** busca `39500` en `calculadora.html` y actualízalo cuando cambie.
-- **Foto ejecutiva:** reemplaza `foto-ejecutiva.jpeg` conservando el mismo nombre.
-- **Testimonios y los 3 pasos:** están como texto directo en `index.html`.
+## Notas
 
-## Pendientes conocidos
-
-- Los testimonios de la sección "Casos reales" son de ejemplo: reemplázalos por los reales.
-- El formulario "Cotiza gratis" no envía correos: abre WhatsApp con los datos ya escritos.
-- Los valores de la calculadora son estimaciones (valor base real × factor aproximado); la cotización formal se emite aparte.
+- La agenda no bloquea horas automáticamente: cada reserva llega por WhatsApp y tú la confirmas.
+- Los valores de la calculadora son estimaciones; la cotización formal se emite aparte.
