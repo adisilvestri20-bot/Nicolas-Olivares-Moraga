@@ -242,7 +242,7 @@ input,select,button{font-family:inherit}
       <p style="fontSize:16px;lineHeight:1.6;margin:0;color:#4f4749">Cursos completados por Nicolás Patricio Olivares Moraga.</p>
     </div>
     <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">
-        <a href="certificado-codigo-conducta.pdf" target="_blank" rel="noopener" style="display:flex;flexDirection:column;gap:10px;padding:22px;borderRadius:16px;background:#fff;border:1px solid #ece7e7;boxShadow:0 8px 24px rgba(60,20,22,0.06);textDecoration:none;color:#1d1a1b" style-hover="borderColor:#7a2226;boxShadow:0 12px 30px rgba(60,20,22,0.12)">
+        <a href="#certificaciones" data-cert="cert-codigo-conducta.jpg" role="button" style="display:flex;flexDirection:column;gap:10px;padding:22px;borderRadius:16px;background:#fff;border:1px solid #ece7e7;boxShadow:0 8px 24px rgba(60,20,22,0.06);textDecoration:none;color:#1d1a1b" style-hover="borderColor:#7a2226;boxShadow:0 12px 30px rgba(60,20,22,0.12)">
           <span style="width:46px;height:46px;borderRadius:50%;background:#7a2226;color:#fff;display:grid;placeItems:center">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="9" r="6"></circle><path d="M8.5 13.9 7 22l5-3 5 3-1.5-8.1"></path></svg>
           </span>
@@ -251,7 +251,7 @@ input,select,button{font-family:inherit}
           <span style="fontSize:14px;color:#5f5759">Finalizado el 23/04/2025</span>
           <span style="display:inline-flex;alignItems:center;minHeight:44px;fontSize:15px;fontWeight:700;color:#7a2226;marginTop:auto">Ver certificado →</span>
         </a>
-        <a href="certificado-nps.pdf" target="_blank" rel="noopener" style="display:flex;flexDirection:column;gap:10px;padding:22px;borderRadius:16px;background:#fff;border:1px solid #ece7e7;boxShadow:0 8px 24px rgba(60,20,22,0.06);textDecoration:none;color:#1d1a1b" style-hover="borderColor:#7a2226;boxShadow:0 12px 30px rgba(60,20,22,0.12)">
+        <a href="#certificaciones" data-cert="cert-nps.jpg" role="button" style="display:flex;flexDirection:column;gap:10px;padding:22px;borderRadius:16px;background:#fff;border:1px solid #ece7e7;boxShadow:0 8px 24px rgba(60,20,22,0.06);textDecoration:none;color:#1d1a1b" style-hover="borderColor:#7a2226;boxShadow:0 12px 30px rgba(60,20,22,0.12)">
           <span style="width:46px;height:46px;borderRadius:50%;background:#7a2226;color:#fff;display:grid;placeItems:center">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="9" r="6"></circle><path d="M8.5 13.9 7 22l5-3 5 3-1.5-8.1"></path></svg>
           </span>
@@ -260,7 +260,7 @@ input,select,button{font-family:inherit}
           <span style="fontSize:14px;color:#5f5759">Finalizado el 23/04/2025</span>
           <span style="display:inline-flex;alignItems:center;minHeight:44px;fontSize:15px;fontWeight:700;color:#7a2226;marginTop:auto">Ver certificado →</span>
         </a>
-        <a href="certificado-ges-caec.pdf" target="_blank" rel="noopener" style="display:flex;flexDirection:column;gap:10px;padding:22px;borderRadius:16px;background:#fff;border:1px solid #ece7e7;boxShadow:0 8px 24px rgba(60,20,22,0.06);textDecoration:none;color:#1d1a1b" style-hover="borderColor:#7a2226;boxShadow:0 12px 30px rgba(60,20,22,0.12)">
+        <a href="#certificaciones" data-cert="cert-ges-caec.jpg" role="button" style="display:flex;flexDirection:column;gap:10px;padding:22px;borderRadius:16px;background:#fff;border:1px solid #ece7e7;boxShadow:0 8px 24px rgba(60,20,22,0.06);textDecoration:none;color:#1d1a1b" style-hover="borderColor:#7a2226;boxShadow:0 12px 30px rgba(60,20,22,0.12)">
           <span style="width:46px;height:46px;borderRadius:50%;background:#7a2226;color:#fff;display:grid;placeItems:center">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="9" r="6"></circle><path d="M8.5 13.9 7 22l5-3 5 3-1.5-8.1"></path></svg>
           </span>
@@ -442,5 +442,10 @@ class Component extends DCLogic {
   }
 }
 </script>
+<div id="cert-lb" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(20,8,9,.86);align-items:center;justify-content:center;padding:16px;-webkit-user-select:none;user-select:none"><button id="cert-x" aria-label="Cerrar" style="position:absolute;top:12px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:24px;cursor:pointer">×</button><div style="position:relative;max-width:min(96vw,1100px);max-height:90vh"><img id="cert-img" alt="Certificado" draggable="false" style="display:block;max-width:100%;max-height:90vh;border-radius:8px;background:#fff;-webkit-touch-callout:none"><div style="position:absolute;inset:0"></div></div></div>
+<script>(function(){var lb=document.getElementById('cert-lb'),im=document.getElementById('cert-img');function close(){lb.style.display='none';im.removeAttribute('src')}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-cert]');if(a){e.preventDefault();im.src=a.getAttribute('data-cert');lb.style.display='flex';return}if(e.target===lb||e.target.id==='cert-x')close()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+lb.addEventListener('contextmenu',function(e){e.preventDefault()});lb.addEventListener('dragstart',function(e){e.preventDefault()});})();</script>
 </body>
 </html>

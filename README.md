@@ -9,7 +9,7 @@ Sitio estático, sin compilación. Todos los archivos van en la **raíz del repo
 - `agenda.html` — reserva de horas online o presencial (lunes a domingo, 08:00–00:00); confirma por WhatsApp
 - `support.js`, `styles.css`, `ds-bundle.js` — necesarios para que las páginas funcionen
 - `foto-ejecutiva.jpeg`, `fachada-banmedica.jpeg`, `og-portada.jpg` — imágenes
-- `certificado-*.pdf` — certificaciones enlazadas desde la página
+- `cert-*.jpg` — certificaciones (imagen con marca de agua, solo visualización en la página; los PDF originales no se publican)
 - `tarifario.pdf` — referencia interna (no está enlazado)
 - `robots.txt`, `sitemap.xml`, `.nojekyll` — SEO y GitHub Pages
 
