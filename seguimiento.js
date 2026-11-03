@@ -14,11 +14,11 @@
  *      y pega su "ID/etiqueta" (por ejemplo "AW-1234567890/AbCdEfGh") abajo.
  */
 (function () {
-  var ID = "AW-18552826390";
+  var ID = "AW-18552826398";
   var CONVERSIONES = {
-    whatsapp: "",
-    telefono: "",
-    reserva: ""
+    whatsapp: "AW-18552826398/rMfUCIm497AdEJ7U1o5F",
+    telefono: "AW-18552826398/ScKsCIy497AdEJ7U1o5F",
+    reserva: "AW-18552826398/xV9eCI-497AdEJ7U1o5F"
   };
 
   window.dataLayer = window.dataLayer || [];
