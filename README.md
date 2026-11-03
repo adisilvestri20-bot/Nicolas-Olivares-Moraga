@@ -8,7 +8,8 @@ Sitio estático, sin compilación. Todos los archivos van en la **raíz del repo
 - `calculadora.html` — comparador completo con valores base del tarifario
 - `agenda.html` — reserva de horas online o presencial (lunes a domingo, 08:00–00:00); confirma por WhatsApp
 - `support.js`, `styles.css`, `ds-bundle.js` — necesarios para que las páginas funcionen
-- `foto-ejecutiva.jpeg`, `fachada-banmedica.jpeg`, `og-portada.jpg` — imágenes
+- `foto-ejecutiva.jpeg`, `og-portada.jpg` — imágenes
+- `seguimiento.js` — mide clics a WhatsApp y teléfono y el envío de la agenda para Google Ads (pega el ID de Google Ads y las etiquetas de conversión al inicio del archivo; vacío no hace nada)
 - `cert-*.jpg` — certificaciones (imagen con marca de agua, solo visualización en la página; los PDF originales no se publican)
 - `tarifario.pdf` — referencia interna (no está enlazado)
 - `robots.txt`, `sitemap.xml`, `.nojekyll` — SEO y GitHub Pages
