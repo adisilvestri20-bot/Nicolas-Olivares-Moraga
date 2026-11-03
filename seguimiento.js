@@ -14,7 +14,7 @@
  *      y pega su "ID/etiqueta" (por ejemplo "AW-1234567890/AbCdEfGh") abajo.
  */
 (function () {
-  var ID = "";
+  var ID = "AW-18552826390";
   var CONVERSIONES = {
     whatsapp: "",
     telefono: "",
